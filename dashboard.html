@@ -872,6 +872,47 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
   animation: toastIn 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+/* ===== KASIR (sesuai wireframe) ===== */
+.k-cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.k-btn{padding:9px 16px;border-radius:12px;background:var(--surface);border:1.5px solid var(--border);font-weight:700;font-size:13px;color:var(--ink)}
+.k-btn.on{background:var(--lime);border-color:var(--lime-dark)}
+.k-btn.alt{background:var(--ink);color:var(--lime);border-color:var(--ink);margin-left:auto}
+.k-lbl{display:inline-block;margin:6px 0 10px;padding:6px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-weight:700;font-size:12px;color:var(--ink-muted)}
+.k-menu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.k-item{display:flex;gap:6px;min-width:0}
+.k-dots{flex:none;width:34px;border-radius:10px;background:var(--ink);color:var(--lime)}
+.k-bar{flex:1;min-width:0;display:flex;justify-content:space-between;align-items:center;gap:6px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-weight:700;font-size:13px;text-align:left}
+.k-bar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.k-line{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.k-no{flex:none;width:30px;height:38px;display:grid;place-items:center;border-radius:10px;background:var(--lime);font-weight:800;font-size:13px}
+.k-nm{flex:1;min-width:0;padding:8px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--border);font-weight:700;font-size:13px}
+.k-nm .r{display:flex;justify-content:space-between;gap:8px}
+.k-nm small{color:var(--ink-muted);font-weight:600}
+.k-q{display:flex;align-items:center;gap:4px}
+.k-q button{width:28px;height:28px;border-radius:8px;background:var(--surface);border:1px solid var(--border);font-weight:800}
+.k-q span{min-width:24px;text-align:center;font-weight:800}
+.k-sub{min-width:84px;text-align:right;font-weight:800;font-size:13px}
+.k-pay{display:grid;gap:10px;margin:14px 0}
+.k-box{padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--border)}
+.k-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 0;font-weight:700;font-size:13px}
+.k-in{width:120px;text-align:right;padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);font-weight:800;font-size:16px;background:#fff}
+.k-seg{display:flex;gap:6px}
+.k-seg button{padding:6px 14px;border-radius:8px;border:1.5px solid var(--border);font-weight:700;font-size:13px}
+.k-seg button.on{background:var(--lime);border-color:var(--lime-dark)}
+.k-quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.k-quick button{flex:1;padding:8px 0;border-radius:8px;background:var(--lime);font-weight:800;font-size:12px}
+.k-go{width:100%;padding:13px;border-radius:12px;background:var(--lime);border:1.5px solid var(--lime-dark);font-weight:800;font-size:14px}
+.k-total{font-size:30px;font-weight:800;text-align:center;margin-bottom:20px}
+.k-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.k-empty{text-align:center;padding:16px;color:var(--ink-muted);font-weight:600;font-size:13px}
+.k-hist{overflow-x:auto;margin-bottom:12px}
+.k-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:560px;background:var(--surface)}
+.k-tbl th,.k-tbl td{border:1px solid var(--border);padding:5px 6px;text-align:left;vertical-align:top}
+.k-tbl th{background:#eef0e8;font-weight:800}
+.k-tbl tr.g td{border-top:2px solid var(--ink)}
+.k-st{display:inline-block;padding:2px 8px;border-radius:99px;font-weight:800;font-size:10px}
+.k-st.ok{background:var(--lime)}.k-st.no{background:#fee2e2;color:#991b1b}
+.k-upd{display:block;margin-top:5px;padding:5px 8px;border-radius:8px;background:var(--ink);color:var(--lime);font-weight:800;font-size:10px}
 /* ===== SKALA HP ===== */
 html.zm .app-container{zoom:var(--z)}
 html.zm body{padding-bottom:calc(92px * var(--z))}
@@ -1140,233 +1181,131 @@ function render(){
   window.scrollTo(0,0);
 }
 
-/* ===== KATEGORI ===== */
-function categoryCols(n){
-  if(n <= 0) return 1;
-  if(n <= 5) return n;
-  return Math.ceil(n/2);
-}
-function categoriesGridStyle(){
-  const cats = ['Semua', ...S.cats.filter(c=>c!=='Semua')];
-  return `grid-template-columns: repeat(${categoryCols(cats.length)}, minmax(0, 1fr));`;
-}
-function categoriesHTML(){
-  const cats = ['Semua', ...S.cats.filter(c=>c!=='Semua')];
-  return cats.map(c => {
-    const ico = c === 'Semua' ? 'fa-border-all' : c === 'Minuman' ? 'fa-mug-hot' : c === 'Makanan' ? 'fa-utensils' : c === 'Snack' ? 'fa-cookie-bite' : 'fa-tag';
-    return `<div class="cat-item ${cat===c?'active':''}" onclick="setCat('${esc(c).replace(/'/g,'&#39;')}')">
-      <div class="cat-icon"><i class="fas ${ico}"></i></div>
-      <span title="${esc(c)}">${esc(c)}</span>
-    </div>`;
-  }).join('');
-}
+/* ===== KASIR (Halaman 1, sesuai wireframe) ===== */
+const QUICK=[2000,5000,10000,20000,50000,100000];
+let pay={metode:'Tunai',terima:0},payCtx={pre:'k',total:0};
+const fmtTgl=ts=>new Date(ts).toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}).replace(',','');
+const cartTotal=()=>cart.reduce((a,l)=>a+l.harga*l.qty,0);
+const kCats=()=>S.cats.filter(c=>c!=='Semua');
+const lineHTML=(l,i,ctl)=>`<div class="k-line"><div class="k-no">${i+1}</div><div class="k-nm"><div class="r"><span>${esc(l.nama)}</span><b>${rp(l.harga)}</b></div>${l.note?`<small>(${esc(l.note)})</small>`:''}</div><div class="k-q">${ctl}</div><div class="k-sub">${rp(l.harga*l.qty)}</div></div>`;
 
-/* ===== KASIR ===== */
 function pKasir(){
-  $('view').innerHTML = `
-    <div class="black-card">
-      <div class="bc-texture" aria-hidden="true"></div>
-      ${BC_DECOR_SVG}
-      <div class="bc-content" id="bc-inner">${blackCardContent()}</div>
-    </div>
-
-    <div class="section-header"><h2>Kategori</h2></div>
-    <div class="categories-grid" id="cat-holder" style="${categoriesGridStyle()}">${categoriesHTML()}</div>
-
-    <div class="search-wrap ${search?'has-text':''}" id="search-wrap">
-      <i class="fas fa-search search-icon"></i>
-      <input id="search-input" type="text" placeholder="Cari menu, nomor, kategori..." value="${esc(search)}" oninput="onSearchInput(this)" autocomplete="off">
-      <button class="clear-btn" type="button" onclick="clearSearch()" aria-label="Hapus pencarian"><i class="fas fa-times"></i></button>
-    </div>
-
-    <div id="menu-result">${renderMenuArea()}</div>
-
-    <div class="section-header"><h2>Total Pesanan</h2></div>
-    <div class="list-container" id="cart-holder">${cartContent()}</div>
-  `;
+  const cs=kCats(); if(!cs.includes(cat)) cat=cs[0]||'Semua';
+  $('view').innerHTML=`
+    <div class="k-cats">${cs.map((c,i)=>`<button class="k-btn ${c===cat?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}<button class="k-btn alt" onclick="go('menu')">Kelola Menu</button></div>
+    <div class="k-lbl">Pilih &amp; Custom</div>
+    <div class="k-menu">${kMenu()}</div>
+    <div class="k-lbl">Pesanan :</div>
+    <div id="k-cart">${kCart()}</div>
+    <div id="k-sum">${kSum()}</div>
+    <div class="k-lbl" style="margin-top:20px">Riwayat Transaksi &amp; Tombol Bayar</div>
+    <div class="k-hist">${kHist()}</div>`;
 }
-
-function setCat(c){
-  cat = c;
-  const ch = $('cat-holder');
-  if(ch){
-    ch.style.cssText = categoriesGridStyle();
-    ch.innerHTML = categoriesHTML();
-  }
-  const mr = $('menu-result'); if(mr) mr.innerHTML = renderMenuArea();
+function setCat(i){cat=kCats()[i];pKasir()}
+function kMenu(){
+  const L=S.menu.filter(m=>m.aktif&&m.kat===cat);
+  if(!L.length) return `<div class="k-empty" style="grid-column:1/-1">Belum ada menu di kategori ini</div>`;
+  return L.map(m=>`<div class="k-item"><button class="k-dots" onclick="customModal('${m.id}')" aria-label="Custom pesanan"><i class="fas fa-ellipsis-vertical"></i></button><button class="k-bar" onclick="addItem('${m.id}')"><span>${esc(m.nama)}</span><b>${rp(m.harga)}</b></button></div>`).join('');
 }
-
-function onSearchInput(el){
-  search = el.value;
-  const sw = $('search-wrap');
-  if(sw) sw.classList.toggle('has-text', search.length > 0);
-  const mr = $('menu-result');
-  if(mr) mr.innerHTML = renderMenuArea();
+function kCart(){
+  if(!cart.length) return `<div class="k-empty">Belum ada item di pesanan</div>`;
+  return cart.map((l,i)=>lineHTML(l,i,`<button onclick="qty(${i},-1)">−</button><span>${l.qty}</span><button onclick="qty(${i},1)">+</button>`)).join('');
 }
-
-function clearSearch(){
-  search = '';
-  const el = $('search-input');
-  if(el){ el.value = ''; el.focus(); }
-  const sw = $('search-wrap');
-  if(sw) sw.classList.remove('has-text');
-  const mr = $('menu-result');
-  if(mr) mr.innerHTML = renderMenuArea();
+function payInner(pre,total){
+  payCtx={pre,total};
+  if(pay.metode==='QRIS') pay.terima=total;
+  return `<div class="k-pay">
+    <div class="k-box"><div class="k-row"><span>Total Belanja</span><b>${rp(total)}</b></div>
+      <div class="k-row"><span>Uang Diterima</span><input id="${pre}-terima" class="k-in" inputmode="numeric" value="${pay.terima||''}" ${pay.metode==='QRIS'?'readonly':''} oninput="setTerima(this.value)" autocomplete="off"></div>
+      <div class="k-row"><span>Kembalian</span><b id="${pre}-kemb">${rp(Math.max(0,pay.terima-total))}</b></div></div>
+    <div class="k-box"><div class="k-row"><span>Pembayaran</span><span class="k-seg"><button class="${pay.metode==='Tunai'?'on':''}" onclick="setMetode('Tunai')">Tunai</button><button class="${pay.metode==='QRIS'?'on':''}" onclick="setMetode('QRIS')">QRIS</button></span></div>
+      <div class="k-quick">${QUICK.map(v=>`<button onclick="setTerima(${v},1)">${v/1000}rb</button>`).join('')}</div></div></div>`;
 }
-
-function menuFiltered(){
-  return S.menu.filter(m => m.aktif && (cat === 'Semua' || m.kat === cat));
+function setTerima(v,q){
+  pay.terima=q?+v:(parseInt(String(v).replace(/\D/g,''))||0);
+  const i=$(payCtx.pre+'-terima'); if(q&&i&&pay.metode==='Tunai') i.value=pay.terima;
+  const k=$(payCtx.pre+'-kemb'); if(k) k.textContent=rp(Math.max(0,pay.terima-payCtx.total));
 }
-
-function renderMenuArea(){
-  const base = menuFiltered();
-
-  if(search.trim()){
-    const q = search.toLowerCase().trim();
-    const results = base.filter(m =>
-      (m.nama||'').toLowerCase().includes(q) ||
-      (m.nomor||'').toLowerCase().includes(q) ||
-      (m.kat||'').toLowerCase().includes(q)
-    );
-    if(!results.length){
-      return `
-        <div class="section-header"><h2>Hasil Pencarian</h2></div>
-        <div class="empty-state">
-          <i class="fas fa-search"></i>
-          <h3>Tidak ditemukan</h3>
-          <p>Coba kata kunci lain atau ubah kategori.</p>
-        </div>
-      `;
-    }
-    return `
-      <div class="section-header"><h2>Hasil Pencarian</h2><span class="meta">${results.length} item</span></div>
-      <div class="list-container">
-        ${results.map(m=>`
-          <div class="list-item clickable" onclick="addItem('${m.id}')">
-            <div class="li-left">
-              <div class="li-icon">${esc(m.nomor)}</div>
-              <div class="li-info">
-                <h4>${esc(m.nama)}</h4>
-                <p>${esc(m.kat)}</p>
-              </div>
-            </div>
-            <div class="li-price">${rp(m.harga)}</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  const popular = base.slice(0, 6);
-  if(!popular.length){
-    return `
-      <div class="section-header"><h2>Input Pesanan</h2></div>
-      <div class="empty-state">
-        <i class="fas fa-utensils"></i>
-        <h3>Belum ada menu</h3>
-        <p>Tambahkan menu di tab Menu.</p>
-      </div>
-    `;
-  }
-  return `
-    <div class="section-header"><h2>Input Pesanan</h2></div>
-    <div class="quick-menu-scroll">
-      ${popular.map(m=>`
-        <div class="qm-item" onclick="addItem('${m.id}')">
-          <div class="qm-icon">${esc(m.nomor)}</div>
-          <span>${esc(m.nama)}</span>
-          <small>${rp(m.harga)}</small>
-        </div>
-      `).join('')}
-    </div>
-  `;
+function setMetode(m){
+  pay.metode=m; pay.terima=m==='QRIS'?payCtx.total:0;
+  $(payCtx.pre+'-wrap').innerHTML=payInner(payCtx.pre,payCtx.total);
 }
+function kSum(){return `<div id="k-wrap">${payInner('k',cartTotal())}</div><button class="k-go" onclick="confirmPay()">Konfirmasi Pembayaran</button>`}
+function kRefresh(){$('k-cart').innerHTML=kCart();$('k-sum').innerHTML=kSum()}
 
-function blackCardContent(){
-  const total = cart.reduce((a,l)=>a+l.harga*l.qty,0);
-  const count = cart.reduce((a,l)=>a+l.qty,0);
-  return `
-    <div class="bc-header">
-      <span class="bc-label">Total Tagihan</span>
-      <div class="bc-icon"><i class="fas fa-receipt"></i></div>
-    </div>
-    <div class="bc-amount"><small>Rp</small>${nf(total)}</div>
-    <div class="bc-footer">
-      <span class="bc-items">${count} Item</span>
-      <button class="btn-checkout" onclick="confirmPay()" ${cart.length?'':'style="opacity:0.5;pointer-events:none"'}>
-        Bayar <i class="fas fa-arrow-right"></i>
-      </button>
-    </div>
-  `;
-}
-
-function cartContent(){
-  if(!cart.length) return `<div style="text-align:center;padding:24px;color:var(--ink-muted);font-weight:600;font-size:13px;">Belum ada item di pesanan</div>`;
-  return cart.map((l,i)=>`
-    <div class="list-item">
-      <div class="li-left">
-        <div class="li-icon active-bg">${esc(l.nomor)}</div>
-        <div class="li-info">
-          <h4>${esc(l.nama)}</h4>
-          <p>${rp(l.harga)} ${l.note?`· ${esc(l.note)}`:''}</p>
-        </div>
-      </div>
-      <div class="li-right">
-        <div class="qty-control">
-          <button class="qty-btn" onclick="qty(${i},-1)"><i class="fas fa-minus"></i></button>
-          <span class="qty-val">${l.qty}</span>
-          <button class="qty-btn" onclick="qty(${i},1)"><i class="fas fa-plus"></i></button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function updateCartAndTotal(){
-  const bi = $('bc-inner'); if(bi) bi.innerHTML = blackCardContent();
-  const cw = $('cart-holder'); if(cw) cw.innerHTML = cartContent();
-}
-
-function addItem(id){
+function addItem(id,note=''){
   const m=S.menu.find(x=>x.id==id); if(!m)return;
-  const l=cart.find(x=>x.mid==id);
-  l ? l.qty++ : cart.push({mid:id,nama:m.nama,harga:m.harga,kat:m.kat,note:'',qty:1,nomor:m.nomor});
-  updateCartAndTotal();
+  const l=cart.find(x=>x.mid==id&&(x.note||'')===note);
+  l ? l.qty++ : cart.push({mid:id,nama:m.nama,harga:m.harga,kat:m.kat,note,qty:1,nomor:m.nomor});
+  kRefresh();
 }
-function qty(i,d){
-  cart[i].qty += d;
-  if(cart[i].qty < 1) cart.splice(i,1);
-  updateCartAndTotal();
+function qty(i,d){cart[i].qty+=d;if(cart[i].qty<1)cart.splice(i,1);kRefresh()}
+function customModal(id){
+  const m=S.menu.find(x=>x.id==id); if(!m)return;
+  const v=(m.variasi||'').split(',').map(s=>s.trim()).filter(Boolean);
+  modal(`<h2 class="modal-title">${esc(m.nama)}</h2>
+    <div class="k-lbl" style="margin-top:0">Custom / Catatan</div>
+    <div class="k-chips">${v.map(x=>`<button class="k-btn" onclick="$('c-note').value=this.textContent">${esc(x)}</button>`).join('')}</div>
+    <div class="form-group"><input id="c-note" class="form-input" placeholder="Contoh: Sedikit Gula" autocomplete="off"></div>
+    <button class="btn-lime" onclick="customAdd('${m.id}')">Tambah ke Pesanan</button>`);
 }
+function customAdd(id){addItem(id,$('c-note').value.trim());closeM()}
 
 function confirmPay(){
   if(!cart.length) return toast('Pilih menu dulu');
-  const total = cart.reduce((a,l)=>a+l.harga*l.qty,0);
-  modal(`
-    <h2 class="modal-title">Pembayaran</h2>
-    <div style="font-size:32px;font-weight:800;text-align:center;margin-bottom:32px;letter-spacing:-0.5px;">${rp(total)}</div>
-    <div class="form-group">
-      <label class="form-label">No Meja / Nama Pemesan</label>
-      <input id="mj" class="form-input" value="${esc(meja)}" placeholder="Contoh: Meja 4 / Budi">
-    </div>
+  modal(`<h2 class="modal-title">Konfirmasi Pembayaran</h2>
+    <div class="k-total">${rp(cartTotal())}</div>
+    <div class="form-group"><label class="form-label">No Meja / Take Away &amp; Nama Pemesan</label>
+      <input id="mj" class="form-input" value="${esc(meja)}" placeholder="Isikan nama / No Meja disini (ketik)..."></div>
     <button class="btn-lime" onclick="doSave(true)">Sudah Bayar</button>
-    <button class="btn-solid" onclick="doSave(false)">Belum Bayar</button>
-  `);
+    <button class="btn-solid" onclick="doSave(false)">Belum Bayar</button>`);
   setTimeout(()=>$('mj')&&$('mj').focus(),60);
 }
-
 function newId(ts){const k=dkey(ts).replace(/-/g,'').slice(2);return k+p2(S.trx.filter(t=>t.id.startsWith(k)).length+1)}
 function doSave(paid){
   meja=$('mj').value.trim();
-  if(!meja)return toast('Isi Meja / Nama');
-  const tot=cart.reduce((a,l)=>a+l.harga*l.qty,0);
+  if(!meja) return toast('Isi Meja / Nama');
+  const tot=cartTotal();
+  if(paid&&pay.metode==='Tunai'&&pay.terima<tot) return toast('Uang diterima kurang');
   const now=Date.now();
-  const t={id:newId(now),ts:now,nama:meja,items:cart.map(l=>({...l})),total:tot,paid,metode:paid?'Tunai':'',diterima:paid?tot:0,pts:paid?now:0};
+  const t={id:newId(now),ts:now,nama:meja,items:cart.map(l=>({...l})),total:tot,paid,metode:paid?pay.metode:'',diterima:paid?(pay.metode==='QRIS'?tot:pay.terima):0,pts:paid?now:0};
   S.trx.push(t);save();
-  cart=[];meja='';
-  closeM();
-  printStruk(t);
+  cart=[];meja='';pay={metode:'Tunai',terima:0};
+  closeM();printStruk(t);   /* struk selalu tercetak saat pesanan disimpan */
   toast('Transaksi disimpan');
+  pKasir();
+}
+
+/* Riwayat + Update Bayar */
+function kHist(){
+  const L=[...S.trx].sort((a,b)=>b.ts-a.ts).slice(0,30);
+  if(!L.length) return `<div class="k-empty">Belum ada transaksi</div>`;
+  return `<table class="k-tbl"><thead><tr><th>TGL &amp; Jam</th><th>ID trx</th><th>pcs</th><th>Pesanan</th><th>Meja/Catatan</th><th>Harga</th><th>Total</th><th>Status Pembayaran</th></tr></thead>`+
+  L.map(t=>{const n=t.items.length,rs=`rowspan="${n}"`;
+    return t.items.map((l,i)=>`<tr class="${i?'':'g'}">${i?'':`<td ${rs}>${fmtTgl(t.ts)}</td><td ${rs}>${esc(t.id)}</td>`}<td>${l.qty}</td><td>${esc(l.nama)}${l.note?` <small>(${esc(l.note)})</small>`:''}</td>${i?'':`<td ${rs}>${esc(t.nama)}</td>`}<td>${rp(l.harga)}</td>${i?'':`<td ${rs}>${rp(t.total)}</td><td ${rs}>${t.paid?`<span class="k-st ok">Sudah bayar</span>`:`<span class="k-st no">Blm bayar</span><button class="k-upd" onclick="updModal('${t.id}')">Update Bayar</button>`}</td>`}</tr>`).join('');
+  }).join('')+`</table>`;
+}
+function updModal(id,keep){
+  const t=S.trx.find(x=>x.id==id); if(!t)return;
+  if(!keep) pay={metode:'Tunai',terima:0};
+  modal(`<h2 class="modal-title">Update Bayar Pesanan :</h2>
+    ${t.items.map((l,i)=>lineHTML(l,i,`<button onclick="updQty('${t.id}',${i},-1)">−</button><span>${l.qty}</span><button onclick="updQty('${t.id}',${i},1)">+</button>`)).join('')}
+    <div id="u-wrap">${payInner('u',t.total)}</div>
+    <button class="k-go" onclick="doUpdate('${t.id}')">Konfirmasi Sudah Bayar</button>`);
+}
+function updQty(id,i,d){
+  const t=S.trx.find(x=>x.id==id); if(!t)return;
+  const l=t.items[i]; l.qty+=d;
+  if(l.qty<1){ if(t.items.length>1) t.items.splice(i,1); else l.qty=1; }
+  t.total=t.items.reduce((a,x)=>a+x.harga*x.qty,0);
+  save(); updModal(id,1);
+}
+function doUpdate(id){
+  const t=S.trx.find(x=>x.id==id); if(!t)return;
+  if(pay.metode==='Tunai'&&pay.terima<t.total) return toast('Uang diterima kurang');
+  Object.assign(t,{paid:true,metode:pay.metode,diterima:pay.metode==='QRIS'?t.total:pay.terima,pts:Date.now()});
+  save(); pay={metode:'Tunai',terima:0};
+  closeM(); toast('Pembayaran diperbarui');   /* tidak mencetak struk lagi */
   pKasir();
 }
 
