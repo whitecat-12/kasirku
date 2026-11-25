@@ -860,6 +860,20 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
   animation: toastIn 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+/* ================= AUTH ================= */
+#auth{position:fixed;inset:0;z-index:250;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+#auth[hidden]{display:none}
+.auth-card{width:100%;max-width:300px;margin:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 16px 12px;box-shadow:var(--shadow-md)}
+.auth-logo{width:36px;height:36px;border-radius:50%;background:var(--lime);border:1.5px solid var(--lime-dark);display:grid;place-items:center;font-size:15px;margin:0 auto 8px}
+.auth-card .modal-title{font-size:16px;margin-bottom:2px!important}
+.auth-sub{text-align:center;color:var(--ink-muted);font-weight:600;font-size:11px;margin-bottom:12px}
+.auth-card .form-group{margin-bottom:8px}
+.auth-card .form-label{font-size:11px;margin-bottom:4px}
+.auth-card .form-input{padding:8px 12px;font-size:16px;border-radius:var(--radius-sm)}
+.auth-card .btn-lime{padding:10px;font-size:14px;border-radius:var(--radius-sm);margin-bottom:4px}
+.auth-err{color:#d93a3a;font-weight:700;font-size:11px;text-align:center;min-height:14px;margin-bottom:6px}
+.auth-switch{width:100%;padding:6px;color:var(--ink-muted);font-weight:600;font-size:12px}
+.auth-switch b{color:var(--ink)}
 </style>
 </head>
 <body data-tab="kasir">
@@ -874,6 +888,7 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
     </div>
     <div class="header-actions">
       <button class="icon-btn" onclick="need(2,()=>go('atur'))"><i class="fas fa-sliders"></i></button>
+      <button class="icon-btn" onclick="logout()" title="Keluar" aria-label="Keluar"><i class="fas fa-right-from-bracket"></i></button>
     </div>
   </header>
 
@@ -883,6 +898,7 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
 
 <div class="modal-overlay" id="ov" hidden onclick="if(event.target==this)closeM()"><div class="modal-content" id="box"></div></div>
 <div id="printarea" style="display:none"></div>
+<div id="auth" hidden></div>
 
 <script>
 const K='kasir-rempah-v4';
@@ -902,27 +918,138 @@ const DEF=()=>({
   ],
   trx:[],kas:[],saldoAwal:100000,jenis:['Kas Masuk','Kas Keluar'],kkas:['Omset','Bahan Baku','Operasional','Lainnya'],n:1
 });
-let S=null;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
-S=S||DEF();S.cfg={...DEF().cfg,...S.cfg};
+/* ===== INDEXEDDB ===== */
+const DB_NAME='kasir-rempah-db';
+let _db=null;
+function idb(){
+  if(_db) return Promise.resolve(_db);
+  return new Promise((res,rej)=>{
+    if(!window.indexedDB) return rej(new Error('Browser tidak mendukung IndexedDB'));
+    const r=indexedDB.open(DB_NAME,1);
+    r.onupgradeneeded=()=>{
+      const d=r.result;
+      d.createObjectStore('users',{keyPath:'username'}); // akun
+      d.createObjectStore('data',{keyPath:'username'});  // menu, transaksi/riwayat, kas, pengaturan per akun
+      d.createObjectStore('meta',{keyPath:'key'});       // sesi login
+    };
+    r.onsuccess=()=>{_db=r.result;_db.onversionchange=()=>{_db.close();_db=null};res(_db)};
+    r.onerror=()=>rej(r.error);
+  });
+}
+function idbReq(store,mode,fn){
+  return idb().then(d=>new Promise((res,rej)=>{
+    const tx=d.transaction(store,mode),rq=fn(tx.objectStore(store));
+    tx.oncomplete=()=>res(rq&&rq.result);
+    tx.onerror=()=>rej(tx.error);
+    tx.onabort=()=>rej(tx.error);
+  }));
+}
+const dbGet=(s,k)=>idbReq(s,'readonly',o=>o.get(k));
+const dbPut=(s,v)=>idbReq(s,'readwrite',o=>o.put(v));
+const dbDel=(s,k)=>idbReq(s,'readwrite',o=>o.delete(k));
+const dbCount=s=>idbReq(s,'readonly',o=>o.count());
 
-S.menu.forEach((m,i)=>{
-  if(!m.nomor || typeof m.nomor!=='string') m.nomor = String(i+1).padStart(2,'0');
-  if(!m.kat) m.kat = 'Lainnya';
-  if(m.kat && !S.cats.includes(m.kat)) S.cats.push(m.kat);
-});
+/* ===== STATE ===== */
+let S=DEF(),USER=null;
 
-/* Migrasi kas: pastikan punya id/ts/jenis/kategori */
-S.kas = (S.kas || []).map(k=>{
-  if(!k.id) k.id = 'k'+Math.random().toString(36).slice(2,8);
-  if(!k.ts) k.ts = Date.now();
-  if(!k.jenis) k.jenis = 'Kas Masuk';
-  if(!k.kategori) k.kategori = 'Lainnya';
-  if(!k.kkas && k.kategori && !S.kkas.includes(k.kategori)) S.kkas.push(k.kategori);
-  return k;
-});
-if(typeof S.saldoAwal !== 'number') S.saldoAwal = 0;
+function normalizeS(){
+  S.cfg={...DEF().cfg,...S.cfg};
+  S.menu.forEach((m,i)=>{
+    if(!m.nomor || typeof m.nomor!=='string') m.nomor = String(i+1).padStart(2,'0');
+    if(!m.kat) m.kat = 'Lainnya';
+    if(m.kat && !S.cats.includes(m.kat)) S.cats.push(m.kat);
+  });
+  /* Migrasi kas: pastikan punya id/ts/jenis/kategori */
+  S.kas = (S.kas || []).map(k=>{
+    if(!k.id) k.id = 'k'+Math.random().toString(36).slice(2,8);
+    if(!k.ts) k.ts = Date.now();
+    if(!k.jenis) k.jenis = 'Kas Masuk';
+    if(!k.kategori) k.kategori = 'Lainnya';
+    if(!k.kkas && k.kategori && !S.kkas.includes(k.kategori)) S.kkas.push(k.kategori);
+    return k;
+  });
+  S.trx=S.trx||[];
+  if(typeof S.saldoAwal !== 'number') S.saldoAwal = 0;
+}
 
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+/* Simpan otomatis ke IndexedDB (dipanggil di semua tempat yang dulu menulis ke localStorage) */
+const save=()=>{if(!USER)return;dbPut('data',{username:USER.username,state:S,updatedAt:Date.now()}).catch(()=>toast('Gagal menyimpan ke IndexedDB'))};
+
+/* ===== AUTH ===== */
+const toHex=b=>Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('');
+const rnd=n=>toHex(crypto.getRandomValues(new Uint8Array(n)));
+async function hashPw(pw,salt,algo){
+  if(algo==='pbkdf2'){
+    if(!(window.crypto&&crypto.subtle)) throw new Error('Buka lewat https atau localhost untuk login akun ini');
+    const enc=new TextEncoder();
+    const key=await crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveBits']);
+    return toHex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:100000,hash:'SHA-256'},key,256));
+  }
+  let h=5381;const s=salt+pw;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;
+  return h.toString(16);
+}
+let authMode='login';
+function authView(mode,msg){
+  if(mode) authMode=mode;
+  const reg=authMode==='daftar',A=$('auth');
+  A.hidden=false;
+  A.innerHTML=`<div class="auth-card" onkeydown="if(event.key=='Enter')submitAuth()">
+    <div class="auth-logo"><i class="fas fa-mug-hot"></i></div>
+    <h2 class="modal-title" style="margin-bottom:6px">${reg?'Buat Akun':'Masuk'}</h2>
+    <p class="auth-sub">${reg?'Daftar untuk mulai memakai kasir':'Masuk ke akun kasir kamu'}</p>
+    ${reg?`<div class="form-group"><label class="form-label">Nama Usaha</label><input id="a-nama" class="form-input" placeholder="Kasir Rempah" autocomplete="organization"></div>`:''}
+    <div class="form-group"><label class="form-label">Username</label><input id="a-user" class="form-input" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username"></div>
+    <div class="form-group"><label class="form-label">Password</label><input id="a-pass" type="password" class="form-input" autocomplete="${reg?'new-password':'current-password'}"></div>
+    ${reg?`<div class="form-group"><label class="form-label">Ulangi Password</label><input id="a-pass2" type="password" class="form-input" autocomplete="new-password"></div>`:''}
+    <div id="a-err" class="auth-err">${esc(msg||'')}</div>
+    <button class="btn-lime" id="a-btn" onclick="submitAuth()">${reg?'Daftar':'Masuk'}</button>
+    <button class="auth-switch" onclick="authView('${reg?'login':'daftar'}')">${reg?'Sudah punya akun? <b>Masuk</b>':'Belum punya akun? <b>Daftar</b>'}</button>
+  </div>`;
+  setTimeout(()=>{const f=$(reg?'a-nama':'a-user');f&&f.focus()},60);
+}
+async function submitAuth(){
+  const err=m=>{$('a-err').textContent=m};
+  const u=$('a-user').value.trim().toLowerCase(),p=$('a-pass').value;
+  const reg=authMode==='daftar',btn=$('a-btn');
+  if(!/^[a-z0-9_.]{3,20}$/.test(u)) return err('Username 3–20 karakter: huruf, angka, titik, atau garis bawah.');
+  if(p.length<6) return err('Password minimal 6 karakter.');
+  btn.disabled=true;
+  try{
+    if(reg){
+      if(p!==$('a-pass2').value) return err('Konfirmasi password tidak sama.');
+      if(await dbGet('users',u)) return err('Username sudah dipakai.');
+      const nama=$('a-nama').value.trim()||'Kasir Rempah';
+      const first=(await dbCount('users'))===0;
+      const salt=rnd(16),algo=(window.crypto&&crypto.subtle)?'pbkdf2':'simple';
+      await dbPut('users',{username:u,nama,salt,algo,hash:await hashPw(p,salt,algo),createdAt:Date.now()});
+      let st=DEF();st.cfg.nama=nama;
+      if(first){ /* pindahkan data lama dari localStorage ke akun pertama */
+        try{const old=JSON.parse(localStorage.getItem(K));if(old&&old.menu){st=old;toast('Data lama dipindahkan ke akun ini')}}catch(e){}
+      }
+      await dbPut('data',{username:u,state:st,updatedAt:Date.now()});
+      await startSession(u);
+    }else{
+      const rec=await dbGet('users',u);
+      if(!rec||await hashPw(p,rec.salt,rec.algo)!==rec.hash) return err('Username atau password salah.');
+      await startSession(u);
+    }
+  }catch(e){err('Gagal: '+e.message)}
+  finally{btn.disabled=false}
+}
+async function startSession(u){
+  USER=await dbGet('users',u);
+  const row=await dbGet('data',u);
+  S=(row&&row.state)||DEF();normalizeS();
+  await dbPut('meta',{key:'session',username:u});
+  lvl=0;tab='kasir';cat='Semua';cart=[];meja='';search='';
+  $('auth').hidden=true;$('auth').innerHTML='';
+  render();
+}
+async function logout(){
+  if(!confirm('Keluar dari akun?'))return;
+  await dbDel('meta','session');
+  USER=null;S=DEF();closeM();authView('login');
+}
 const $=i=>document.getElementById(i),nf=n=>(+n||0).toLocaleString('id-ID'),rp=n=>'Rp '+nf(n);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const p2=n=>String(n).padStart(2,'0'),dkey=t=>{const d=new Date(t);return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())};
@@ -2083,14 +2210,23 @@ function pAtur(){
 }
 
 function saveAtur(){
-  S.cfg.nama = $('#s-nama').value;
-  S.cfg.tag = $('#s-tag').value;
-  S.cfg.pinA = $('#s-pin').value;
+  S.cfg.nama = $('s-nama').value;
+  S.cfg.tag = $('s-tag').value;
+  S.cfg.pinA = $('s-pin').value;
   save(); render(); toast('Tersimpan');
 }
 
 // Init
-render();
+(async()=>{
+  try{
+    const ses=await dbGet('meta','session');
+    if(ses&&await dbGet('users',ses.username)) return await startSession(ses.username);
+    authView((await dbCount('users'))?'login':'daftar');
+  }catch(e){
+    $('auth').hidden=false;
+    $('auth').innerHTML='<div class="auth-card"><h2 class="modal-title">IndexedDB tidak tersedia</h2><p class="auth-sub">'+esc(e.message)+'. Coba tutup mode privat atau pakai browser lain.</p></div>';
+  }
+})();
 </script>
 </body>
 </html>
