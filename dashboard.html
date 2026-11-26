@@ -950,6 +950,19 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
 .s-sec{border-color:#8faadc}.s-sec summary{background:#00b050;color:#fff;border-radius:13px}
 .s-sec[open] summary{border-radius:13px 13px 0 0}
 .k-seg button{background:#fff}
+/* ===== BARIS TOMBOL SIMETRIS ===== */
+.k-cats>*{flex:1 1 auto;text-align:center;margin-left:0!important;justify-content:center}
+.k-cats.eq{flex-wrap:nowrap;gap:6px}
+.k-cats.eq>*{flex:1 1 0;min-width:0;padding:10px 2px;white-space:nowrap;font-size:12.5px;overflow:hidden;text-overflow:ellipsis}
+.k-cats>.k-lbl,.k-cats>.k-box{align-self:stretch;display:flex;align-items:center;justify-content:center;margin:0}
+/* ===== SEMUA BARIS TOMBOL: 1 BARIS, TIDAK TURUN ===== */
+.k-cats{flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none}
+.k-cats::-webkit-scrollbar{display:none}
+.k-cats>*{white-space:nowrap}
+.k-cats .k-btn{padding:9px 8px;font-size:12px}
+.k-cats .k-btn.sm{padding:9px 8px}
+.k-cats .k-dt{width:92px;font-size:11px}
+.k-cats.tight{gap:4px}.k-cats.tight .k-btn{padding:9px 3px;font-size:11px}.k-cats.tight .k-lbl{padding:6px 7px;font-size:11px}
 /* ===== SKALA HP ===== */
 html.zm .app-container{zoom:var(--z)}
 html.zm body{padding-bottom:calc(92px * var(--z))}
@@ -1230,7 +1243,7 @@ const lineHTML=(l,i,ctl)=>`<div class="k-line"><div class="k-no">${i+1}</div><di
 function pKasir(){
   const cs=kCats(); if(!cs.includes(cat)) cat=cs[0]||'Semua';
   $('view').innerHTML=`
-    <div class="k-cats">${cs.map((c,i)=>`<button class="k-btn ${c===cat?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}<button class="k-btn alt" onclick="go('menu')">Kelola Menu</button></div>
+    <div class="k-cats eq">${cs.map((c,i)=>`<button class="k-btn ${c===cat?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}<button class="k-btn alt" onclick="go('menu')">Kelola Menu</button></div>
     <div class="k-lbl pc">Pilih &amp; Custom</div>
     <div class="k-menu">${kMenu()}</div>
     <div class="k-lbl">Pesanan :</div>
@@ -1468,7 +1481,7 @@ function pMenu(){
   const cs=kCats(); if(mcat!=='__off'&&!cs.includes(mcat)) mcat=cs[0]||'';
   const L=mcat==='__off'?S.menu.filter(m=>!m.aktif):S.menu.filter(m=>m.kat===mcat);
   $('view').innerHTML=`
-    <div class="k-cats"><span class="k-lbl" style="margin:0">MENU</span>
+    <div class="k-cats tight"><span class="k-lbl" style="margin:0">MENU</span>
       ${cs.map((c,i)=>`<button class="k-btn ${c===mcat?'on':''}" onclick="mcat=kCats()[${i}];pMenu()">${esc(c)}</button>`).join('')}
       <button class="k-btn ${mcat==='__off'?'on':''}" onclick="mcat='__off';pMenu()">Menu tak aktif</button>
       <button class="k-btn alt" onclick="menuForm()">Tambah Menu</button></div>
@@ -1592,7 +1605,7 @@ function saveSaldoAwal(){S.saldoAwal=+$('saldo-awal').value||0;S.saldoAwalSet=tr
 
 /* ===== DASHBOARD & LAPORAN (Halaman 4) ===== */
 let lp={t:'dash',per:'bulan',from:'',to:'',cat:'Semua',kat:'',jenis:''};
-const LP_TABS=[['dash','1. Dashboard'],['sales','2. Laporan Penjualan'],['top','3. Produk Terlaris'],['kas','4. Laporan Buku Kas']];
+const LP_TABS=[['dash','Dashboard'],['sales','Penjualan'],['top','Produk Terlaris'],['kas','Buku Kas']];
 function perRange(){
   const now=new Date(),tk=dkey(now);
   if(lp.per==='hari') return [tk,tk];
