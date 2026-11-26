@@ -20,13 +20,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
-  --bg: #f5f6f3;
+  --bg: #ffffff;
   --surface: #ffffff;
   --ink: #121411;
   --ink-muted: #6b7266;
-  --lime: #c8f560;
-  --lime-dark: #b5e348;
-  --border: #eaebe7;
+  --lime: #92d050;
+  --lime-dark: #6fae34;
+  --border: #8faadc;
 
   --dark-a: #252922;
   --dark-b: #171a14;
@@ -906,13 +906,50 @@ input[type="date"].form-input { color: var(--ink); font-family: inherit; }
 .k-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .k-empty{text-align:center;padding:16px;color:var(--ink-muted);font-weight:600;font-size:13px}
 .k-hist{overflow-x:auto;margin-bottom:12px}
-.k-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:560px;background:var(--surface)}
-.k-tbl th,.k-tbl td{border:1px solid var(--border);padding:5px 6px;text-align:left;vertical-align:top}
+.k-tbl{width:100%;border-collapse:collapse;font-size:10.5px;min-width:0;background:var(--surface)}
+.k-tbl th,.k-tbl td{border:1px solid var(--border);padding:4px 5px;text-align:left;vertical-align:top}
 .k-tbl th{background:#eef0e8;font-weight:800}
 .k-tbl tr.g td{border-top:2px solid var(--ink)}
 .k-st{display:inline-block;padding:2px 8px;border-radius:99px;font-weight:800;font-size:10px}
 .k-st.ok{background:var(--lime)}.k-st.no{background:#fee2e2;color:#991b1b}
 .k-upd{display:block;margin-top:5px;padding:5px 8px;border-radius:8px;background:var(--ink);color:var(--lime);font-weight:800;font-size:10px}
+.m-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}.m-row.off{opacity:.55}
+.m-nm{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-weight:700;font-size:13px}
+.m-pr{width:68px;text-align:right;padding:10px 8px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-weight:700;font-size:13px}
+.k-btn.sm{padding:9px 12px;font-size:12px}
+.k-note{font-size:11px;font-weight:600;color:var(--ink-muted);margin:10px 0;line-height:1.5}
+.k-f{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 12px}.k-f .w{grid-column:1/-1}
+.k-f label{display:block;font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:3px}
+.k-f input,.k-f select,.k-sel{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);font-size:16px;font-weight:600;background:#fff}
+.k-fl{display:flex;gap:6px}.k-sel{width:auto;flex:1;min-width:140px;font-size:14px}
+.k-dt{border:1px solid var(--border);border-radius:6px;padding:3px;font-size:12px;width:112px;background:#fff}
+.s-sec{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:10px}
+.s-sec summary{padding:14px 16px;font-weight:800;font-size:14px;cursor:pointer}.s-body{padding:0 16px 16px}
+/* ===== PALET WIREFRAME ===== */
+.k-btn{background:#00b050;color:#fff;border:1px solid #0a8f43;border-radius:8px}
+.k-btn.on{background:#00b050;color:#ff0000;border-color:#0a8f43;text-decoration:underline;text-decoration-color:#92d050;text-underline-offset:4px;text-decoration-thickness:2px}
+.k-btn.alt{background:#92d050;color:#000;border-color:#6fae34}
+.k-btn.lm{background:#92d050;color:#000;border-color:#6fae34}
+.k-lbl{background:#deebf7;color:#000;border:1px solid #8faadc;border-radius:8px}
+.k-lbl.pc{background:#f8cbad}.k-lbl.yl{background:#fff2cc}
+.k-dots{background:#00b050;color:#000;border:1px solid #0a8f43;border-radius:8px}
+.k-bar{background:#d6dce5;border:1px solid #8faadc;border-radius:8px}
+.k-no,.k-nm,.k-sub,.k-box{background:#deebf7;border:1px solid #8faadc;border-radius:10px}
+.k-no{color:#000}.k-sub{padding:8px 10px;min-width:92px;text-align:center}
+.k-q button{background:#deebf7;border:1px solid #8faadc}
+.k-quick button,.k-go{background:#92d050;color:#000;border:1px solid #6fae34}
+.k-seg button.on{background:#92d050;border-color:#6fae34}
+.m-nm,.m-pr{background:#bdd7ee;border:1px solid #8faadc;border-radius:8px}
+.k-note{background:#f8cbad;color:#000;border:1px solid #8faadc;padding:8px 10px;border-radius:4px;font-weight:500}
+.k-tbl{background:#fff}.k-tbl th{background:#ededed}.k-tbl th,.k-tbl td{border-color:#555}
+.k-upd{background:#92d050;color:#000}.k-upd.red{background:#f00;color:#fff}
+.k-st.ok{background:#92d050}.k-st.no{background:#fff;color:#e00;border:1px solid #e00}
+.k-in,.k-f input,.k-f select,.k-sel{background:#fff2cc;border-color:#8faadc}
+.modal-content{background:#fbe5d6}
+.modal-content .form-input{background:#fff2cc;border:1px solid #8faadc}
+.s-sec{border-color:#8faadc}.s-sec summary{background:#00b050;color:#fff;border-radius:13px}
+.s-sec[open] summary{border-radius:13px 13px 0 0}
+.k-seg button{background:#fff}
 /* ===== SKALA HP ===== */
 html.zm .app-container{zoom:var(--z)}
 html.zm body{padding-bottom:calc(92px * var(--z))}
@@ -967,7 +1004,7 @@ const NOMORS = Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
 const mk=(n,h,k,v='',nomor='01')=>({id:'m'+Math.random().toString(36).slice(2,8),nama:n,harga:h,kat:k,aktif:true,variasi:v,nomor});
 const DEF=()=>({
   cfg:{nama:'Kasir Rempah',tag:'Bandrek, kunyit & kopi',pinK:'1111',pinA:'1234',ukuran:'58',foot:'Terima kasih',showId:'ya',autoPrint:'ya',bd:28,autolock:'tidak',tema:'#c8f560'},
-  cats:['Semua','Minuman','Makanan','Snack'],
+  cats:['Semua','Minuman','Makanan','Snack','Lainnya'],
   menu:[
     mk('Bandrek',10000,'Minuman','Normal,Sedikit Gula','01'),
     mk('Bandrek Susu',12000,'Minuman','Normal,Extra Madu','02'),
@@ -1028,6 +1065,7 @@ function normalizeS(){
     if(!k.kkas && k.kategori && !S.kkas.includes(k.kategori)) S.kkas.push(k.kategori);
     return k;
   });
+  S.kas.forEach(k=>{if(!k.status)k.status='Approved';if(!k.oleh)k.oleh='System'});
   S.trx=S.trx||[];
   if(typeof S.saldoAwal !== 'number') S.saldoAwal = 0;
   /* akun lama: default 100.000 yang belum pernah diisi sendiri dikembalikan ke 0 */
@@ -1193,12 +1231,12 @@ function pKasir(){
   const cs=kCats(); if(!cs.includes(cat)) cat=cs[0]||'Semua';
   $('view').innerHTML=`
     <div class="k-cats">${cs.map((c,i)=>`<button class="k-btn ${c===cat?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}<button class="k-btn alt" onclick="go('menu')">Kelola Menu</button></div>
-    <div class="k-lbl">Pilih &amp; Custom</div>
+    <div class="k-lbl pc">Pilih &amp; Custom</div>
     <div class="k-menu">${kMenu()}</div>
     <div class="k-lbl">Pesanan :</div>
     <div id="k-cart">${kCart()}</div>
     <div id="k-sum">${kSum()}</div>
-    <div class="k-lbl" style="margin-top:20px">Riwayat Transaksi &amp; Tombol Bayar</div>
+    <div class="k-lbl yl" style="margin-top:20px">Riwayat Transaksi &amp; Tombol Bayar</div>
     <div class="k-hist">${kHist()}</div>`;
 }
 function setCat(i){cat=kCats()[i];pKasir()}
@@ -1271,7 +1309,7 @@ function doSave(paid){
   const t={id:newId(now),ts:now,nama:meja,items:cart.map(l=>({...l})),total:tot,paid,metode:paid?pay.metode:'',diterima:paid?(pay.metode==='QRIS'?tot:pay.terima):0,pts:paid?now:0};
   S.trx.push(t);save();
   cart=[];meja='';pay={metode:'Tunai',terima:0};
-  closeM();printStruk(t);   /* struk selalu tercetak saat pesanan disimpan */
+  closeM();if(S.cfg.autoPrint!=='tidak')printStruk(t);
   toast('Transaksi disimpan');
   pKasir();
 }
@@ -1282,7 +1320,7 @@ function kHist(){
   if(!L.length) return `<div class="k-empty">Belum ada transaksi</div>`;
   return `<table class="k-tbl"><thead><tr><th>TGL &amp; Jam</th><th>ID trx</th><th>pcs</th><th>Pesanan</th><th>Meja/Catatan</th><th>Harga</th><th>Total</th><th>Status Pembayaran</th></tr></thead>`+
   L.map(t=>{const n=t.items.length,rs=`rowspan="${n}"`;
-    return t.items.map((l,i)=>`<tr class="${i?'':'g'}">${i?'':`<td ${rs}>${fmtTgl(t.ts)}</td><td ${rs}>${esc(t.id)}</td>`}<td>${l.qty}</td><td>${esc(l.nama)}${l.note?` <small>(${esc(l.note)})</small>`:''}</td>${i?'':`<td ${rs}>${esc(t.nama)}</td>`}<td>${rp(l.harga)}</td>${i?'':`<td ${rs}>${rp(t.total)}</td><td ${rs}>${t.paid?`<span class="k-st ok">Sudah bayar</span>`:`<span class="k-st no">Blm bayar</span><button class="k-upd" onclick="updModal('${t.id}')">Update Bayar</button>`}</td>`}</tr>`).join('');
+    return t.items.map((l,i)=>`<tr class="${i?'':'g'}">${i?'':`<td ${rs}>${fmtTgl(t.ts)}</td><td ${rs}>${esc(t.id)}</td>`}<td>${l.qty}</td><td>${esc(l.nama)}${l.note?` <small>(${esc(l.note)})</small>`:''}</td>${i?'':`<td ${rs}>${esc(t.nama)}</td>`}<td>${nf(l.harga)}</td>${i?'':`<td ${rs}>${nf(t.total)}</td><td ${rs}>${t.paid?`<span class="k-st ok">Sudah bayar</span>`:`<span class="k-st no">Blm bayar</span><button class="k-upd red" onclick="updModal('${t.id}')">Update Bayar</button>`}</td>`}</tr>`).join('');
   }).join('')+`</table>`;
 }
 function updModal(id,keep){
@@ -1337,7 +1375,7 @@ function strukPrintHTML(t){
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:#f5f6f3}
   body{font-family:'Helvetica Neue',Arial,system-ui,sans-serif;padding:24px 12px;display:flex;justify-content:center;color:#121411;-webkit-font-smoothing:antialiased}
-  .receipt{width:100%;max-width:380px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 45px -22px rgba(10,12,8,.35);border:1px solid #eaebe7}
+  .receipt{width:100%;max-width:${c.ukuran==='58'?300:380}px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 45px -22px rgba(10,12,8,.35);border:1px solid #eaebe7}
   .r-header{position:relative;overflow:hidden;padding:22px 22px 20px;background:linear-gradient(160deg,#252922 0%,#171a14 50%,#0c0e0a 100%);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
   .r-header::before{content:'';position:absolute;top:-50px;right:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(200,245,96,.35) 0%,transparent 68%)}
   .r-brand{display:flex;align-items:center;gap:10px;position:relative;z-index:1;margin-bottom:6px}
@@ -1385,7 +1423,7 @@ function strukPrintHTML(t){
       <h1>${esc(c.nama)}</h1>
     </div>
     <div class="r-tagline">${esc(c.tag)}</div>
-    <div class="r-id"><span>No. Transaksi</span><b>#${esc(t.id)}</b></div>
+    ${c.showId==='tidak'?'':`<div class="r-id"><span>No. Transaksi</span><b>#${esc(t.id)}</b></div>`}
   </div>
   <div class="r-meta">
     <div class="r-meta-item"><span>Hari</span><b>${dayName}</b></div>
@@ -1425,101 +1463,55 @@ function printStruk(t){
 }
 
 /* ===== MENU (KELOLA) ===== */
+let mcat='';
 function pMenu(){
-  const L = S.menu.filter(m=>m.aktif);
-  $('view').innerHTML = `
-    <div class="section-header">
-      <h2>Kelola Menu</h2>
-      <button class="btn-lime" style="width:auto;padding:8px 16px;font-size:13px;border-radius:99px;margin:0;" onclick="menuForm()"><i class="fas fa-plus" style="margin-right:6px;"></i> Tambah</button>
-    </div>
-    <div class="list-container">
-      ${L.map(m=>`
-        <div class="list-item">
-          <div class="li-left">
-            <div class="li-icon">${esc(m.nomor)}</div>
-            <div class="li-info">
-              <h4>${esc(m.nama)}</h4>
-              <p>${rp(m.harga)} · ${esc(m.kat)}</p>
-            </div>
-          </div>
-          <button class="icon-btn" style="width:40px;height:40px;font-size:14px;" onclick="menuForm('${m.id}')"><i class="fas fa-pen"></i></button>
-        </div>
-      `).join('')}
-    </div>
-  `;
+  const cs=kCats(); if(mcat!=='__off'&&!cs.includes(mcat)) mcat=cs[0]||'';
+  const L=mcat==='__off'?S.menu.filter(m=>!m.aktif):S.menu.filter(m=>m.kat===mcat);
+  $('view').innerHTML=`
+    <div class="k-cats"><span class="k-lbl" style="margin:0">MENU</span>
+      ${cs.map((c,i)=>`<button class="k-btn ${c===mcat?'on':''}" onclick="mcat=kCats()[${i}];pMenu()">${esc(c)}</button>`).join('')}
+      <button class="k-btn ${mcat==='__off'?'on':''}" onclick="mcat='__off';pMenu()">Menu tak aktif</button>
+      <button class="k-btn alt" onclick="menuForm()">Tambah Menu</button></div>
+    ${L.length?L.map(m=>`<div class="m-row ${m.aktif?'':'off'}"><div class="m-nm">${esc(m.nama)}</div><div class="m-pr">${nf(m.harga)}</div>
+      <button class="k-btn sm lm" onclick="toggleMenu('${m.id}')">${m.aktif?'Aktif':'Tidak Aktif'}</button>
+      <button class="k-btn sm" onclick="menuForm('${m.id}')">Edit</button></div>`).join(''):`<div class="k-empty">Tidak ada menu</div>`}
+    <div class="k-note">Edit dan perubahan lainnya tidak mengubah transaksi yang sudah disimpan, atau yang terjadi sebelum tanggal edit. Tombol Aktif/Tidak Aktif menunjukkan status produk di halaman Kasir.</div>`;
 }
-
+function toggleMenu(id){const m=S.menu.find(x=>x.id==id);if(!m)return;m.aktif=!m.aktif;save();pMenu()}
 function autoNomor(){
-  let max = 0;
-  S.menu.forEach(m=>{ const v = parseInt(m.nomor,10); if(!isNaN(v) && v>max) max=v; });
+  let max=0;S.menu.forEach(m=>{const v=parseInt(m.nomor,10);if(!isNaN(v)&&v>max)max=v});
   return String(max+1).padStart(2,'0');
 }
-
 function menuForm(id){
-  const m = id ? S.menu.find(x=>x.id==id) : {nama:'',harga:'',kat:'Minuman',nomor:autoNomor(),variasi:''};
-  const nomor = m.nomor || '01';
-  const kats = S.cats.filter(c=>c!=='Semua');
-
-  modal(`
-    <h2 class="modal-title">${id?'Edit Menu':'Tambah Menu'}</h2>
-    <div class="form-group">
-      <label class="form-label">Nama Produk</label>
-      <input id="f-nama" class="form-input" value="${esc(m.nama)}" placeholder="Contoh: Bandrek Susu" autocomplete="off">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Harga (Rp)</label>
-      <input id="f-harga" class="form-input" inputmode="numeric" value="${m.harga}" placeholder="0" autocomplete="off">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Kategori</label>
-      <input id="f-kat" class="form-input" list="kat-list" value="${esc(m.kat)}" placeholder="Ketik atau pilih kategori" autocomplete="off">
-      <datalist id="kat-list">${kats.map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist>
-      <div class="hint">Bebas ketik kategori baru — otomatis masuk daftar.</div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nomor Menu</label>
-      <input id="f-nomor" class="form-input" value="${esc(nomor)}" placeholder="01 / A1 / VIP" maxlength="6" autocomplete="off" style="text-align:center;font-weight:800;font-size:20px;letter-spacing:2px;">
-      <div class="num-quick">
-        ${NOMORS.map(n=>`<button type="button" onclick="document.getElementById('f-nomor').value='${n}'">${n}</button>`).join('')}
-      </div>
-      <div class="hint">Bisa <b>angka, huruf, atau campuran</b> — ketik bebas atau tap cepat di atas.</div>
-    </div>
-    <button class="btn-lime" onclick="saveMenu('${id||''}')">Simpan Menu</button>
-    ${id?`<button class="btn-solid" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;margin-top:12px;" onclick="delMenu('${id}')">Hapus Menu</button>`:''}
-  `);
+  const m=id?S.menu.find(x=>x.id==id):{nama:'',harga:'',kat:mcat&&mcat!=='__off'?mcat:'Minuman',variasi:''};
+  modal(`<h2 class="modal-title">${id?'Edit Menu':'Tambah Menu'}</h2>
+    <div class="form-group"><label class="form-label">Nama Produk</label><input id="f-nama" class="form-input" value="${esc(m.nama)}" autocomplete="off"></div>
+    <div class="form-group"><label class="form-label">Pilih Kategori</label><input id="f-kat" class="form-input" list="kat-list" value="${esc(m.kat)}" autocomplete="off">
+      <datalist id="kat-list">${kCats().map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist>
+      <div class="hint">Ketik kategori baru untuk menambahkannya.</div></div>
+    <div class="form-group"><label class="form-label">Harga (Rp)</label><input id="f-harga" class="form-input" inputmode="numeric" value="${m.harga}" autocomplete="off"></div>
+    <div class="form-group"><label class="form-label">Variasi / Custom (pisahkan koma)</label><input id="f-var" class="form-input" value="${esc(m.variasi||'')}" placeholder="Normal, Sedikit Gula, Extra Madu" autocomplete="off"></div>
+    <button class="btn-lime" onclick="saveMenu('${id||''}')">Simpan</button>
+    ${id?`<button class="btn-solid" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;margin-top:12px;" onclick="delMenu('${id}')">Hapus Menu</button>`:''}`);
 }
-
 function saveMenu(id){
-  const n = $('#f-nama').value.trim();
-  const h = +$('#f-harga').value;
-  let k = $('#f-kat').value.trim();
-  let nomor = $('#f-nomor').value.trim();
-
-  if(!n || !h) return toast('Lengkapi nama dan harga');
-  if(!k) k = 'Lainnya';
-  if(!nomor) nomor = autoNomor();
-  nomor = nomor.toUpperCase().slice(0,6);
-
+  const n=$('f-nama').value.trim(),h=+$('f-harga').value;
+  const k=$('f-kat').value.trim()||'Lainnya',v=$('f-var').value.trim();
+  if(!n||!h) return toast('Lengkapi nama dan harga');
   if(!S.cats.includes(k)) S.cats.push(k);
-
-  if(id){
-    const cur = S.menu.find(x=>x.id==id);
-    Object.assign(cur, {nama:n, harga:h, kat:k, nomor});
-  } else {
-    S.menu.push(mk(n,h,k,'',nomor));
-  }
-
-  save(); closeM(); pMenu(); toast('Tersimpan');
+  if(id) Object.assign(S.menu.find(x=>x.id==id),{nama:n,harga:h,kat:k,variasi:v});
+  else S.menu.push(mk(n,h,k,v,autoNomor()));
+  mcat=k;save();closeM();pMenu();toast('Tersimpan');
 }
-
 function delMenu(id){
-  S.menu = S.menu.filter(x=>x.id!=id);
-  save(); closeM(); pMenu(); toast('Dihapus');
+  if(!confirm('Hapus menu ini? (transaksi lama tidak berubah)'))return;
+  S.menu=S.menu.filter(x=>x.id!=id);save();closeM();pMenu();toast('Dihapus');
 }
 
 /* ===== BUKU KAS ===== */
+/* ===== BUKU KAS ===== */
 function kasTotals(){
-  const kas = S.kas || [];
+  const kas = (S.kas||[]).filter(k=>k.status!=='Draft');
   const masuk = kas.filter(k=>k.jenis==='Kas Masuk').reduce((a,k)=>a+(+k.jumlah||0),0);
   const keluar = kas.filter(k=>k.jenis==='Kas Keluar').reduce((a,k)=>a+(+k.jumlah||0),0);
   const saldoAwal = +S.saldoAwal||0;
@@ -1527,653 +1519,243 @@ function kasTotals(){
   return {masuk, keluar, saldo, saldoAwal, count:kas.length};
 }
 
+function kasSaldoMap(){
+  let s=+S.saldoAwal||0;const m={};
+  [...S.kas].sort((a,b)=>a.ts-b.ts).forEach(k=>{if(k.status==='Approved'){s+=(k.jenis==='Kas Masuk'?1:-1)*(+k.jumlah||0);m[k.id]=s}});
+  return m;
+}
+const kasRowHTML=(k,sm,act)=>`<tr><td>${fD(dkey(k.ts))}</td><td>${esc(k.jenis)}</td><td>${esc(k.kategori)}</td><td>${esc(k.ket||'-')}</td><td>${nf(k.jumlah)}</td><td>${esc(k.oleh||'-')}</td><td>${sm[k.id]!=null?nf(sm[k.id]):'-'}</td><td><span class="k-st ${k.status==='Approved'?'ok':'no'}">${k.status==='Approved'?'Approved':'Draft'}</span>${act||''}</td></tr>`;
+const KAS_HEAD=['Tgl TRX','Kategori','Jenis','Uraian','Jumlah','Oleh','Saldo','Status'];
+function kasRowArr(k,sm){return [fD(dkey(k.ts)),k.jenis,k.kategori,k.ket||'-',nf(k.jumlah),k.oleh||'-',sm[k.id]!=null?nf(sm[k.id]):'-',k.status]}
+
 function pKas(){
-  const {masuk, keluar, saldo, saldoAwal, count} = kasTotals();
-  const sorted = [...S.kas].sort((a,b)=>b.ts-a.ts);
-
-  $('view').innerHTML = `
-    <div class="section-header">
-      <h2>Buku Kas</h2>
-      <button class="btn-lime" style="width:auto;padding:8px 16px;font-size:13px;border-radius:99px;margin:0;" onclick="kasForm()"><i class="fas fa-plus" style="margin-right:6px;"></i> Tambah</button>
-    </div>
-
-    <div class="black-card" style="margin-bottom:20px;">
-      <div class="bc-texture" aria-hidden="true"></div>
-      <div class="bc-content">
-        <div class="bc-header">
-          <span class="bc-label">Saldo Kas</span>
-          <div class="bc-icon"><i class="fas fa-wallet"></i></div>
-        </div>
-        <div class="bc-amount"><small>Rp</small>${nf(saldo)}</div>
-        <div class="bc-footer">
-          <span class="bc-items">Saldo awal ${rp(saldoAwal)}</span>
-          <button class="btn-checkout" onclick="editSaldoAwal()">
-            Ubah <i class="fas fa-pen" style="font-size:11px;"></i>
-          </button>
-        </div>
+  const sm=kasSaldoMap(),L=[...S.kas].sort((a,b)=>b.ts-a.ts);
+  $('view').innerHTML=`
+    <div class="k-cats"><div class="k-box" style="padding:9px 14px;font-weight:800;font-size:13px">Saldo Awal : ${nf(S.saldoAwal)}</div>
+      <button class="k-btn" onclick="need(2,editSaldoAwal)">Edit</button>
+      <button class="k-btn alt" onclick="exportRpt('pdf','kas0')">Ekspor PDF</button><button class="k-btn alt" style="margin-left:0" onclick="exportRpt('csv','kas0')">Ekspor CSV</button></div>
+    <button class="k-btn alt" style="margin:0 0 12px" onclick="need(2,()=>recordSales([dkey(Date.now())]))">Catat trx ke Buku Kas</button>
+    <div class="k-box"><div class="k-lbl" style="margin-top:0">Input Kas</div>
+      <div class="k-f">
+        <div><label>Tgl TRX</label><input id="kf-tgl" type="date" value="${dkey(Date.now())}"></div>
+        <div><label>Oleh</label><input id="kf-oleh" value="${esc(USER?USER.username:'')}"></div>
+        <div><label>Kategori</label><div class="k-fl"><select id="kf-kat">${S.jenis.map(j=>`<option>${esc(j)}</option>`).join('')}</select></div></div>
+        <div><label>Jenis</label><div class="k-fl"><select id="kf-jenis">${S.kkas.map(j=>`<option>${esc(j)}</option>`).join('')}</select><button class="k-dots" style="width:36px" onclick="addJenis()" aria-label="Tambah jenis"><i class="fas fa-ellipsis-vertical"></i></button></div></div>
+        <div class="w"><label>Uraian</label><input id="kf-ket" placeholder="Contoh: Beli Jahe 2 kg" autocomplete="off"></div>
+        <div class="w"><label>Jumlah (Rp)</label><input id="kf-jml" inputmode="numeric" autocomplete="off"></div>
       </div>
-    </div>
-
-    <div class="stat-grid">
-      <div class="stat-box green">
-        <div class="stat-label">Kas Masuk</div>
-        <div class="stat-title">Total</div>
-        <div class="stat-value">${rp(masuk)}</div>
-        <div class="stat-desc">${S.kas.filter(k=>k.jenis==='Kas Masuk').length} entri</div>
-      </div>
-      <div class="stat-box red">
-        <div class="stat-label">Kas Keluar</div>
-        <div class="stat-title">Total</div>
-        <div class="stat-value">${rp(keluar)}</div>
-        <div class="stat-desc">${S.kas.filter(k=>k.jenis==='Kas Keluar').length} entri</div>
-      </div>
-    </div>
-
-    <div class="chart-container">
-      <div class="chart-header">
-        <h3>Ekspor Buku Kas</h3>
-        <span class="chart-meta">${count} entri</span>
-      </div>
-      <div class="export-grid" style="grid-template-columns:1fr 1fr;">
-        <button class="export-btn csv" onclick="exportKasCSV()"><i class="fas fa-file-csv"></i><span>CSV</span></button>
-        <button class="export-btn pdf" onclick="exportKasPDF()"><i class="fas fa-file-pdf"></i><span>PDF</span></button>
-      </div>
-      <div class="hint" style="margin-top:12px;text-align:center;">
-        Saldo akhir: <b>${rp(saldo)}</b> · ${count} entri
-      </div>
-    </div>
-
-    <div class="section-header"><h2>Riwayat Kas</h2></div>
-    <div class="list-container">
-      ${sorted.length ? sorted.map(k=>{
-        const d = new Date(k.ts);
-        const dayName = DAY_NAMES[d.getDay()];
-        const dateStr = fD(dkey(k.ts));
-        const timeStr = p2(d.getHours())+':'+p2(d.getMinutes());
-        const isMasuk = k.jenis==='Kas Masuk';
-        return `<div class="list-item">
-          <div class="li-left">
-            <div class="li-icon ${isMasuk?'masuk':'keluar'}">
-              <i class="fas ${isMasuk?'fa-arrow-down':'fa-arrow-up'}"></i>
-            </div>
-            <div class="li-info">
-              <h4>${esc(k.ket || k.kategori)}</h4>
-              <p>${dayName}, ${dateStr} · ${timeStr} · ${esc(k.kategori)}</p>
-            </div>
-          </div>
-          <div class="li-right">
-            <div class="li-price" style="color:${isMasuk?'var(--ink)':'#991b1b'}; white-space:nowrap;">
-              ${isMasuk?'+':'-'} ${rp(k.jumlah)}
-            </div>
-            <button class="icon-btn" style="width:34px;height:34px;font-size:12px;" onclick="kasForm('${k.id}')"><i class="fas fa-pen"></i></button>
-          </div>
-        </div>`;
-      }).join('') : `<div class="empty-state">
-        <i class="fas fa-wallet"></i>
-        <h3>Belum Ada Transaksi Kas</h3>
-        <p>Tap "Tambah" untuk mencatat kas masuk atau keluar.</p>
-        <button class="btn-lime" style="margin-top:16px;width:auto;padding:10px 20px;font-size:13px;" onclick="kasForm()">
-          <i class="fas fa-plus" style="margin-right:6px;"></i> Tambah Entri
-        </button>
-      </div>`}
-    </div>
-  `;
+      <button class="k-go" onclick="saveDraft()">Simpan draft</button>
+      <div class="k-note" style="margin-top:8px">Kasir mengisi sebagai Draft. Masuk ke saldo hanya setelah di-Approve admin (PIN).</div></div>
+    <div class="k-lbl" style="margin-top:16px">Riwayat Buku Kas</div>
+    <div class="k-hist">${L.length?`<table class="k-tbl"><thead><tr>${KAS_HEAD.map(h=>`<th>${h}</th>`).join('')}</tr></thead>${L.map(k=>kasRowHTML(k,sm,(k.status==='Approved'?'':`<button class="k-upd" onclick="approveKas('${k.id}')">Approve</button>`)+`<button class="k-upd" style="background:#fee2e2;color:#991b1b" onclick="delKas('${k.id}')">Hapus</button>`)).join('')}</table>`:`<div class="k-empty">Belum ada catatan kas</div>`}</div>`;
 }
-
-function kasForm(id){
-  const k = id ? S.kas.find(x=>x.id==id) : {
-    jenis:'Kas Masuk',
-    kategori:'Omset',
-    ket:'',
-    jumlah:'',
-    ts: Date.now()
-  };
-  const d = new Date(k.ts);
-  const dateVal = d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
-
-  modal(`
-    <h2 class="modal-title">${id?'Edit Entri Kas':'Tambah Entri Kas'}</h2>
-
-    <div class="form-group">
-      <label class="form-label">Jenis</label>
-      <div class="kas-jenis">
-        <button type="button" class="kas-jenis-btn ${k.jenis==='Kas Masuk'?'active':''}" data-jenis="Kas Masuk" onclick="setKasJenis('Kas Masuk')">
-          <i class="fas fa-arrow-down"></i> Masuk
-        </button>
-        <button type="button" class="kas-jenis-btn ${k.jenis==='Kas Keluar'?'active':''}" data-jenis="Kas Keluar" onclick="setKasJenis('Kas Keluar')">
-          <i class="fas fa-arrow-up"></i> Keluar
-        </button>
-      </div>
-      <input type="hidden" id="k-jenis" value="${esc(k.jenis)}">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Kategori</label>
-      <input id="k-kat" class="form-input" list="kas-kat-list" value="${esc(k.kategori)}" placeholder="Ketik atau pilih kategori" autocomplete="off">
-      <datalist id="kas-kat-list">
-        ${S.kkas.map(c=>`<option value="${esc(c)}"></option>`).join('')}
-      </datalist>
-      <div class="hint">Bebas ketik kategori baru — otomatis masuk daftar.</div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Keterangan</label>
-      <input id="k-ket" class="form-input" value="${esc(k.ket||'')}" placeholder="Contoh: Beli gula aren 2 kg" autocomplete="off">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Jumlah (Rp)</label>
-      <input id="k-jumlah" class="form-input" inputmode="numeric" value="${k.jumlah||''}" placeholder="0" autocomplete="off">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Tanggal</label>
-      <input id="k-tgl" type="date" class="form-input" value="${dateVal}">
-    </div>
-
-    <button class="btn-lime" onclick="saveKas('${id||''}')">Simpan</button>
-    ${id?`<button class="btn-solid" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;margin-top:12px;" onclick="delKas('${id}')">Hapus Entri</button>`:''}
-  `);
+function addJenis(){
+  const n=(prompt('Tambah Jenis baru (contoh: Bahan Baku)')||'').trim();
+  if(!n)return; if(!S.kkas.includes(n)) S.kkas.push(n); save(); pKas();
 }
-
-function setKasJenis(j){
-  const inp = $('#k-jenis'); if(inp) inp.value = j;
-  document.querySelectorAll('.kas-jenis-btn').forEach(b=>{
-    b.classList.toggle('active', b.dataset.jenis === j);
-  });
+function saveDraft(){
+  const jumlah=+$('kf-jml').value,tgl=$('kf-tgl').value;
+  if(!jumlah||jumlah<=0) return toast('Isi jumlah dengan benar');
+  if(!tgl) return toast('Isi tanggal transaksi');
+  const [y,m,d]=tgl.split('-').map(Number),n=new Date();
+  S.kas.push({id:'k'+Math.random().toString(36).slice(2,8),jenis:$('kf-kat').value,kategori:$('kf-jenis').value||'Lainnya',ket:$('kf-ket').value.trim(),jumlah,
+    ts:new Date(y,m-1,d,n.getHours(),n.getMinutes()).getTime(),tsInput:Date.now(),oleh:$('kf-oleh').value.trim()||'-',status:'Draft'});
+  save();pKas();toast('Draft disimpan');
 }
-
-function saveKas(id){
-  const jenis = $('#k-jenis').value;
-  const kategori = ($('#k-kat').value.trim()) || 'Lainnya';
-  const ket = $('#k-ket').value.trim();
-  const jumlah = +$('#k-jumlah').value;
-  const tgl = $('#k-tgl').value;
-
-  if(!jumlah || jumlah <= 0) return toast('Isi jumlah dengan benar');
-  if(!tgl) return toast('Isi tanggal');
-
-  const [y,m,d] = tgl.split('-').map(Number);
-  let ts;
-  if(id){
-    const cur = S.kas.find(x=>x.id==id);
-    const existing = new Date(cur.ts);
-    ts = new Date(y, m-1, d, existing.getHours(), existing.getMinutes(), existing.getSeconds()).getTime();
-  } else {
-    const now = new Date();
-    ts = new Date(y, m-1, d, now.getHours(), now.getMinutes(), now.getSeconds()).getTime();
-  }
-
-  if(!S.kas) S.kas = [];
-  if(id){
-    const cur = S.kas.find(x=>x.id==id);
-    Object.assign(cur, {jenis, kategori, ket, jumlah, ts});
-  } else {
-    S.kas.push({
-      id: 'k'+Math.random().toString(36).slice(2,8),
-      jenis, kategori, ket, jumlah, ts
-    });
-  }
-
-  if(!S.kkas.includes(kategori)) S.kkas.push(kategori);
-
-  save(); closeM(); pKas(); toast('Tersimpan');
-}
-
+function approveKas(id){need(2,()=>{const k=S.kas.find(x=>x.id==id);if(k){k.status='Approved';save();pKas();toast('Di-approve')}})}
 function delKas(id){
-  if(!confirm('Hapus entri kas ini?')) return;
-  S.kas = S.kas.filter(x=>x.id!=id);
-  save(); closeM(); pKas(); toast('Dihapus');
+  const k=S.kas.find(x=>x.id==id);if(!k)return;
+  need(k.status==='Approved'?2:1,()=>{if(!confirm('Hapus entri ini?'))return;S.kas=S.kas.filter(x=>x.id!=id);save();pKas();toast('Dihapus')});
 }
-
+function dayKeys(s,e){const r=[],d=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');for(let i=0;d<=end&&i<62;i++){r.push(dkey(d));d.setDate(d.getDate()+1)}return r}
+function recordSales(keys){
+  let n=0;
+  keys.forEach(k=>{
+    const tot=S.trx.filter(t=>t.paid&&dkey(t.pts||t.ts)===k).reduce((a,t)=>a+t.total,0);
+    if(!tot)return;
+    const ex=S.kas.find(x=>x.src==='sales:'+k);
+    if(ex){if(ex.jumlah!==tot){ex.jumlah=tot;n++}return}
+    const [y,m,d]=k.split('-').map(Number);
+    S.kas.push({id:'k'+Math.random().toString(36).slice(2,8),jenis:'Kas Masuk',kategori:'Omset',ket:'Sales '+fD(k),jumlah:tot,ts:new Date(y,m-1,d,23,59).getTime(),tsInput:Date.now(),oleh:'System',status:'Approved',src:'sales:'+k});
+    n++;
+  });
+  if(!S.kkas.includes('Omset')) S.kkas.push('Omset');
+  save();toast(n?`${n} hari dicatat ke Buku Kas`:'Tidak ada penjualan baru untuk dicatat');
+  if(tab==='kas')pKas();
+}
 function editSaldoAwal(){
-  modal(`
-    <h2 class="modal-title">Saldo Awal</h2>
-    <div class="form-group">
-      <label class="form-label">Saldo Awal Kas (Rp)</label>
-      <input id="saldo-awal" class="form-input" inputmode="numeric" value="${+S.saldoAwal||0}" autocomplete="off">
-      <div class="hint">Saldo awal sebelum ada pencatatan kas masuk/keluar.</div>
-    </div>
-    <button class="btn-lime" onclick="saveSaldoAwal()">Simpan</button>
-  `);
+  modal(`<h2 class="modal-title">Saldo Awal</h2>
+    <div class="form-group"><label class="form-label">Saldo Awal Kas (Rp)</label><input id="saldo-awal" class="form-input" inputmode="numeric" value="${+S.saldoAwal||0}" autocomplete="off"></div>
+    <button class="btn-lime" onclick="saveSaldoAwal()">Simpan</button>`);
 }
-function saveSaldoAwal(){
-  S.saldoAwal = +$('#saldo-awal').value || 0; S.saldoAwalSet = true;
-  save(); closeM(); pKas(); toast('Saldo awal disimpan');
+function saveSaldoAwal(){S.saldoAwal=+$('saldo-awal').value||0;S.saldoAwalSet=true;save();closeM();pKas();toast('Saldo awal disimpan')}
+
+/* ===== DASHBOARD & LAPORAN (Halaman 4) ===== */
+let lp={t:'dash',per:'bulan',from:'',to:'',cat:'Semua',kat:'',jenis:''};
+const LP_TABS=[['dash','1. Dashboard'],['sales','2. Laporan Penjualan'],['top','3. Produk Terlaris'],['kas','4. Laporan Buku Kas']];
+function perRange(){
+  const now=new Date(),tk=dkey(now);
+  if(lp.per==='hari') return [tk,tk];
+  if(lp.per==='tgl') return [lp.from||tk,lp.to||lp.from||tk];
+  if(lp.per==='bulan'){
+    const bd=Math.min(28,Math.max(1,+S.cfg.bd||1));let m=now.getMonth();if(now.getDate()<bd)m--;
+    return [dkey(new Date(now.getFullYear(),m,bd)),dkey(new Date(now.getFullYear(),m+1,bd-1))];
+  }
+  return null;
 }
-
-/* ===== EXPORT BUKU KAS ===== */
-function exportKasFilename(ext){
-  const d = new Date();
-  const ds = d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'_'+p2(d.getHours())+p2(d.getMinutes());
-  return `BukuKas_${(S.cfg.nama||'Kasir').replace(/[^a-zA-Z0-9]/g,'_')}_${ds}.${ext}`;
-}
-
-function exportKasCSV(){
-  if(!S.kas.length) return toast('Belum ada data kas');
-  const sorted = [...S.kas].sort((a,b)=>a.ts-b.ts);
-  const head = ['No','Tanggal','Hari','Jam','Jenis','Kategori','Keterangan','Jumlah'];
-  const lines = [head.join(',')];
-  sorted.forEach((k,i)=>{
-    const d = new Date(k.ts);
-    lines.push([
-      i+1,
-      fD(dkey(k.ts)),
-      DAY_NAMES[d.getDay()],
-      p2(d.getHours())+':'+p2(d.getMinutes()),
-      escCSV(k.jenis),
-      escCSV(k.kategori),
-      escCSV(k.ket||''),
-      k.jumlah
-    ].join(','));
-  });
-  const {masuk, keluar, saldo, saldoAwal} = kasTotals();
-  lines.push('');
-  lines.push('RINGKASAN');
-  lines.push('Saldo Awal,'+saldoAwal);
-  lines.push('Total Kas Masuk,'+masuk);
-  lines.push('Total Kas Keluar,'+keluar);
-  lines.push('Saldo Akhir,'+saldo);
-
-  downloadBlob('\ufeff'+lines.join('\r\n'), 'text/csv;charset=utf-8', exportKasFilename('csv'));
-  toast('CSV Buku Kas diunduh');
-}
-
-function exportKasPDF(){
-  if(!S.kas.length) return toast('Belum ada data kas');
-  const {masuk, keluar, saldo, saldoAwal} = kasTotals();
-  const sorted = [...S.kas].sort((a,b)=>a.ts-b.ts);
-
-  const w = window.open('', '_blank');
-  if(!w) return toast('Popup diblokir browser');
-
-  const rows = sorted.map((k,i)=>{
-    const d = new Date(k.ts);
-    const isMasuk = k.jenis==='Kas Masuk';
-    return `<tr>
-      <td>${i+1}</td>
-      <td>${fD(dkey(k.ts))}</td>
-      <td>${DAY_NAMES[d.getDay()]}</td>
-      <td>${p2(d.getHours())}:${p2(d.getMinutes())}</td>
-      <td><span class="tag ${isMasuk?'in':'out'}">${esc(k.jenis)}</span></td>
-      <td>${esc(k.kategori)}</td>
-      <td>${esc(k.ket||'-')}</td>
-      <td class="num ${isMasuk?'in':'out'}">${isMasuk?'+':'-'} ${nf(k.jumlah)}</td>
-    </tr>`;
-  }).join('');
-
-  let body = `
-    <html><head><meta charset="utf-8"><title>Buku Kas - ${esc(S.cfg.nama)}</title>
-    <style>
-      *{box-sizing:border-box}
-      body{font-family:Arial,sans-serif;padding:24px;color:#121411;margin:0}
-      h1{font-size:20px;margin:0 0 4px;letter-spacing:-.3px}
-      p.meta{color:#6b7266;font-size:12px;margin:0 0 18px}
-      .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-      .sum{padding:12px 14px;border-radius:10px;border:1px solid #eaebe7;background:#fafbf6}
-      .sum.green{background:#c8f560;border-color:#b5e348}
-      .sum.red{background:#fee2e2;border-color:#fca5a5}
-      .sum.dark{background:#171a14;color:#fff;border-color:#171a14}
-      .sum .lbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;opacity:.75;margin-bottom:3px}
-      .sum .val{font-size:14px;font-weight:800;letter-spacing:-.2px}
-      table{width:100%;border-collapse:collapse;font-size:11px}
-      th{background:#252922;color:#fff;text-align:left;padding:8px 6px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:800}
-      td{padding:7px 6px;border-bottom:1px solid #eaebe7;vertical-align:top}
-      tr:nth-child(even) td{background:#f8faf3}
-      .num{text-align:right;white-space:nowrap;font-weight:800}
-      .num.in{color:#3b7d2a}
-      .num.out{color:#991b1b}
-      .tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:.3px}
-      .tag.in{background:#c8f560;color:#121411}
-      .tag.out{background:#fee2e2;color:#991b1b}
-      .footer{margin-top:16px;font-size:10px;color:#6b7266;text-align:center}
-      @media print{body{padding:12px}.summary{page-break-inside:avoid}}
-    </style></head><body>
-    <h1>Buku Kas</h1>
-    <p class="meta">${esc(S.cfg.nama)} · ${esc(S.cfg.tag)} · Dicetak ${fDT(Date.now())}</p>
-
-    <div class="summary">
-      <div class="sum"><div class="lbl">Saldo Awal</div><div class="val">${rp(saldoAwal)}</div></div>
-      <div class="sum green"><div class="lbl">Kas Masuk</div><div class="val">${rp(masuk)}</div></div>
-      <div class="sum red"><div class="lbl">Kas Keluar</div><div class="val">${rp(keluar)}</div></div>
-      <div class="sum dark"><div class="lbl">Saldo Akhir</div><div class="val">${rp(saldo)}</div></div>
-    </div>
-
-    <table>
-      <thead><tr>
-        <th style="width:26px">#</th>
-        <th>Tanggal</th>
-        <th>Hari</th>
-        <th>Jam</th>
-        <th>Jenis</th>
-        <th>Kategori</th>
-        <th>Keterangan</th>
-        <th class="num">Jumlah</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-
-    <div class="footer">Dicetak dari ${esc(S.cfg.nama)} — ${sorted.length} entri kas</div>
-    <script>window.onload=function(){setTimeout(function(){window.print();},400);};<\/script>
-    </body></html>`;
-  w.document.write(body);
-  w.document.close();
-  toast('Membuka dialog cetak PDF');
-}
-
-/* ===== LAPORAN ===== */
+const inR=(k,r)=>!r||(k>=r[0]&&k<=r[1]);
+const perLabel=()=>{const r=perRange();return r?(r[0]===r[1]?fD(r[0]):fD(r[0])+' s/d '+fD(r[1])):'Semua periode'};
+const lpTrx=()=>{const r=perRange();return S.trx.filter(t=>t.paid&&inR(dkey(t.pts||t.ts),r))};
+const lpSet=(k,v)=>{lp[k]=v;pLaporan()};
+function lpDates(){lp.per='tgl';lp.from=$('lp-from').value;lp.to=$('lp-to').value;pLaporan()}
 function pLaporan(){
-  const trxPaid = S.trx.filter(t=>t.paid).sort((a,b)=>b.ts-a.ts);
-  const todayKey = dkey(Date.now());
-  const todayTrx = trxPaid.filter(t=>dkey(t.pts)===todayKey);
-  const todayTotal = todayTrx.reduce((a,t)=>a+t.total,0);
-  const totalAll = trxPaid.reduce((a,t)=>a+t.total,0);
-  const hasData = trxPaid.length > 0;
-
-  const days7 = [];
-  for(let i=6;i>=0;i--){
-    const d = new Date(); d.setDate(d.getDate()-i);
-    const key = dkey(d.getTime());
-    const total = trxPaid.filter(t=>dkey(t.pts)===key).reduce((a,t)=>a+t.total,0);
-    days7.push({label: DAY_SHORT[d.getDay()], total, key});
-  }
-  const maxDay = Math.max(...days7.map(d=>d.total), 1);
-
-  let barHtml = days7.map(d=>{
-    const h = hasData ? Math.round((d.total/maxDay)*100) : 0;
-    return `<div class="bar-col">
-      <div class="bar-track"><div class="bar-fill" style="height:${h}%"></div></div>
-      <span>${d.label}</span>
-    </div>`;
-  }).join('');
-
-  const chartSection = `
-    <div class="chart-container">
-      <div class="chart-header">
-        <h3>Statistik 7 Hari</h3>
-        <span class="chart-meta">${hasData ? 'Aktual' : 'Belum ada data'}</span>
-      </div>
-      <div class="bars">${barHtml}</div>
-      ${!hasData ? `<div class="empty-state" style="padding:16px 0 0;background:transparent;border:none;"><p>Belum ada transaksi lunas.</p></div>` : ''}
-    </div>
-  `;
-
-  let tableSection;
-  if(trxPaid.length){
-    const rows = trxPaid.map((t,i)=>{
-      const d = new Date(t.pts || t.ts);
-      const dayName = DAY_NAMES[d.getDay()];
-      const dateStr = fD(dkey(t.ts));
-      const timeStr = p2(d.getHours())+':'+p2(d.getMinutes());
-      const itemCount = t.items.reduce((a,l)=>a+l.qty,0);
-      return `<tr>
-        <td class="st-no">${i+1}</td>
-        <td class="st-date"><b>${dayName}</b><small>${dateStr} · ${timeStr}</small></td>
-        <td class="st-name" title="${esc(t.nama)}">${esc(t.nama)}</td>
-        <td class="st-center">${itemCount}</td>
-        <td class="st-right">${rp(t.total)}</td>
-      </tr>`;
-    }).join('');
-
-    tableSection = `
-      <div class="chart-container">
-        <div class="chart-header">
-          <h3>Tabel Penjualan</h3>
-          <span class="chart-meta">${trxPaid.length} transaksi</span>
-        </div>
-        <div class="table-wrap">
-          <table class="sales-table">
-            <thead><tr>
-              <th>#</th>
-              <th>Tanggal & Hari</th>
-              <th>Pemesan</th>
-              <th style="text-align:center;">Qty</th>
-              <th style="text-align:right;">Total</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </div>
-    `;
-  } else {
-    tableSection = `
-      <div class="chart-container">
-        <div class="chart-header"><h3>Tabel Penjualan</h3></div>
-        <div class="empty-state">
-          <i class="fas fa-inbox"></i>
-          <h3>Belum Ada Penjualan</h3>
-          <p>Transaksi yang sudah dibayar akan muncul di sini.</p>
-        </div>
-      </div>
-    `;
-  }
-
-  const exportSection = `
-    <div class="chart-container">
-      <div class="chart-header">
-        <h3>Ekspor Data</h3>
-        <span class="chart-meta">${trxPaid.length} baris</span>
-      </div>
-      <div class="export-grid">
-        <button class="export-btn excel" onclick="exportExcel()"><i class="fas fa-file-excel"></i><span>Excel</span></button>
-        <button class="export-btn csv" onclick="exportCSV()"><i class="fas fa-file-csv"></i><span>CSV</span></button>
-        <button class="export-btn pdf" onclick="exportPDF()"><i class="fas fa-file-pdf"></i><span>PDF</span></button>
-      </div>
-      <div class="hint" style="margin-top:12px;text-align:center;">
-        Total pendapatan: <b>${rp(totalAll)}</b> · ${trxPaid.length} transaksi
-      </div>
-    </div>
-  `;
-
-  $('view').innerHTML = `
-    <div class="section-header"><h2>Laporan</h2></div>
-
-    <div class="stat-grid">
-      <div class="stat-box green">
-        <div class="stat-label">Pendapatan</div>
-        <div class="stat-title">Hari Ini</div>
-        <div class="stat-value">${rp(todayTotal)}</div>
-        <div class="stat-desc">${todayTrx.length} transaksi</div>
-      </div>
-      <div class="stat-box dark">
-        <div class="stat-label">Transaksi</div>
-        <div class="stat-title">Total</div>
-        <div class="stat-value">${trxPaid.length}</div>
-        <div class="stat-desc">${rp(totalAll)}</div>
-      </div>
-    </div>
-
-    ${chartSection}
-    ${exportSection}
-    ${tableSection}
-  `;
+  const withAll=lp.t==='kas';
+  const pb=(k,l)=>`<button class="k-btn ${lp.per===k?'on':''}" onclick="lpSet('per','${k}')">${l}</button>`;
+  $('view').innerHTML=`
+    <div class="k-cats">${LP_TABS.map(([k,l])=>`<button class="k-btn ${lp.t===k?'on':''}" onclick="lpSet('t','${k}')">${l}</button>`).join('')}</div>
+    <div class="k-cats">${pb('hari','Hari ini')}
+      <span class="k-btn ${lp.per==='tgl'?'on':''}" style="display:inline-flex;align-items:center;gap:4px;padding:5px 8px">Tgl <input id="lp-from" type="date" class="k-dt" value="${lp.from}" onchange="lpDates()"> s/d <input id="lp-to" type="date" class="k-dt" value="${lp.to}" onchange="lpDates()"></span>
+      ${pb('bulan','Bulan ini')}${withAll?pb('semua','Semua'):''}</div>
+    <div class="k-cats"><button class="k-btn alt" style="margin-left:0" onclick="exportRpt('pdf')">Ekspor PDF</button><button class="k-btn alt" style="margin-left:0" onclick="exportRpt('csv')">Ekspor CSV</button>
+      ${lp.t==='dash'||lp.t==='top'?`<button class="k-btn alt" style="margin-left:0" onclick="need(2,()=>recordSales(dayKeys(...(perRange()||[dkey(Date.now()),dkey(Date.now())]))))">Catat ke Buku Kas</button>`:''}</div>
+    <div class="k-note" style="margin:0 0 10px">Periode: <b>${perLabel()}</b> · periode bulanan dimulai tgl ${Math.min(28,Math.max(1,+S.cfg.bd||1))} (atur di Pengaturan)</div>
+    ${lp.t==='dash'?dashHTML():lp.t==='sales'?salesHTML():lp.t==='top'?topHTML():kasLapHTML()}`;
 }
+function catChips(){return `<div class="k-cats">${['Semua',...kCats()].map(c=>`<button class="k-btn ${lp.cat===c?'on':''}" onclick="lpSet('cat',this.textContent)">${esc(c)}</button>`).join('')}</div>`}
+const row2=(a,b)=>`<div class="k-box"><div class="k-row"><span>${a}</span><b>${b}</b></div></div>`;
 
-/* ===== EXPORT PENJUALAN ===== */
-function exportFilename(ext){
-  const d = new Date();
-  const ds = d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'_'+p2(d.getHours())+p2(d.getMinutes());
-  return `Laporan_${(S.cfg.nama||'Kasir').replace(/[^a-zA-Z0-9]/g,'_')}_${ds}.${ext}`;
+function dashData(){
+  const T=lpTrx(),total=T.reduce((a,t)=>a+t.total,0),n=T.length;
+  const days=new Set(T.map(t=>dkey(t.pts||t.ts))).size;
+  const buyers=new Set(T.map(t=>dkey(t.pts||t.ts)+'|'+String(t.nama).toLowerCase())).size;
+  const cats={};kCats().forEach(c=>cats[c]={pcs:0,rp:0});
+  T.forEach(t=>t.items.forEach(l=>{const c=cats[l.kat]=cats[l.kat]||{pcs:0,rp:0};c.pcs+=l.qty;c.rp+=l.qty*l.harga}));
+  return {total,n,days,buyers,avgDay:days?Math.round(total/days):0,avgBuyer:buyers?Math.round(total/buyers):0,cats};
 }
-function escCSV(s){
-  const str = String(s??'');
-  if(/[",\n\r]/.test(str)) return '"'+str.replace(/"/g,'""')+'"';
-  return str;
+function dashHTML(){
+  const d=dashData();
+  return row2('Total Penjualan (Periode dipilih)',rp(d.total))+row2('Jumlah Transaksi (Periode dipilih)',d.n)+row2('Rata-Rata Penjualan per hari',rp(d.avgDay))+row2('Jumlah hari kerja aktif (terjadi omset)',d.days)+
+    row2('Est. Jumlah Pembeli',d.buyers)+row2('Est. Rata-Rata belanja per pembeli',rp(d.avgBuyer))+
+    `<div class="k-lbl" style="margin-top:8px">Total Produk Terjual By Kategori</div>`+
+    Object.entries(d.cats).map(([c,v])=>`<div class="k-box"><div class="k-row"><span>${esc(c)}</span><span>${v.pcs} Pcs</span><b>${rp(v.rp)}</b></div></div>`).join('');
 }
-function buildExportRows(){
-  const rows = [];
-  const trxPaid = S.trx.filter(t=>t.paid).sort((a,b)=>b.ts-a.ts);
-  trxPaid.forEach((t,idx)=>{
-    const d = new Date(t.pts || t.ts);
-    const tanggal = fD(dkey(t.ts));
-    const hari = DAY_NAMES[d.getDay()];
-    const jam = p2(d.getHours())+':'+p2(d.getMinutes());
-    t.items.forEach((l,li)=>{
-      rows.push({
-        no: li===0 ? idx+1 : '',
-        tanggal: li===0 ? tanggal : '',
-        hari: li===0 ? hari : '',
-        jam: li===0 ? jam : '',
-        id: li===0 ? t.id : '',
-        pemesan: li===0 ? t.nama : '',
-        menu: l.nama,
-        nomor: l.nomor || '',
-        qty: l.qty,
-        harga: l.harga,
-        subtotal: l.qty*l.harga,
-        total: li===0 ? t.total : ''
-      });
-    });
-  });
-  return rows;
+function salesGroups(){
+  return lpTrx().sort((a,b)=>(a.pts||a.ts)-(b.pts||b.ts)).map(t=>({t,items:t.items.filter(l=>lp.cat==='Semua'||l.kat===lp.cat)})).filter(g=>g.items.length);
 }
-function downloadBlob(content, mime, filename){
-  const blob = new Blob([content], {type: mime});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url), 300);
+const SALES_HEAD=['No','Tgl','ID TRX','Uraian','Pcs','Kategori','Harga','Custom','Pembayaran','Meja/Nama Pembeli','Total TRX'];
+function salesFlat(){
+  const out=[];let pcs=0,sum=0;
+  salesGroups().forEach((g,i)=>{const tt=g.items.reduce((a,l)=>a+l.qty*l.harga,0);pcs+=g.items.reduce((a,l)=>a+l.qty,0);sum+=tt;
+    g.items.forEach((l,j)=>out.push([j?'':i+1,j?'':fD(dkey(g.t.pts||g.t.ts)),j?'':g.t.id,l.nama,l.qty,l.kat,nf(l.harga),l.note||'-',g.t.metode||'-',g.t.nama,j?'':nf(tt)]))});
+  return {rows:out,pcs,sum};
 }
+function tableHTML(head,rows,foot){
+  return `<div class="k-hist"><table class="k-tbl"><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead>${rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}${foot||''}</table></div>`;
+}
+function salesHTML(){
+  const f=salesFlat();
+  return catChips()+(f.rows.length?tableHTML(SALES_HEAD,f.rows,`<tr><td colspan="4"><b>Jumlah</b></td><td><b>${f.pcs}</b></td><td colspan="5"></td><td><b>${nf(f.sum)}</b></td></tr>`):`<div class="k-empty">Tidak ada penjualan pada periode ini</div>`);
+}
+function topRows(){
+  const m={};
+  lpTrx().forEach(t=>t.items.forEach(l=>{if(lp.cat!=='Semua'&&l.kat!==lp.cat)return;const o=m[l.nama]=m[l.nama]||{nama:l.nama,harga:l.harga,pcs:0,rp:0};o.pcs+=l.qty;o.rp+=l.qty*l.harga;o.harga=l.harga}));
+  return Object.values(m).sort((a,b)=>b.pcs-a.pcs||b.rp-a.rp).slice(0,10).map((o,i)=>[i+1,o.nama,nf(o.harga),o.pcs,nf(o.rp),perLabel()]);
+}
+const TOP_HEAD=['Rank','Nama Produk','Harga Produk','Jumlah (PCS terjual)','Jumlah (rupiah terjual)','Periode pilihan'];
+function topHTML(){const r=topRows();return catChips()+(r.length?tableHTML(TOP_HEAD,r):`<div class="k-empty">Belum ada penjualan pada periode ini</div>`)}
 
-function exportCSV(){
-  const rows = buildExportRows();
-  if(!rows.length) return toast('Belum ada data untuk diekspor');
-  const head = ['No','Tanggal','Hari','Jam','ID Transaksi','Pemesan','Menu','Nomor','Qty','Harga','Subtotal','Total'];
-  const lines = [head.join(',')];
-  rows.forEach(r=>{
-    lines.push([
-      r.no, escCSV(r.tanggal), escCSV(r.hari), escCSV(r.jam), escCSV(r.id), escCSV(r.pemesan),
-      escCSV(r.menu), escCSV(r.nomor), r.qty, r.harga, r.subtotal, r.total
-    ].join(','));
-  });
-  downloadBlob('\ufeff'+lines.join('\r\n'), 'text/csv;charset=utf-8', exportFilename('csv'));
-  toast('CSV diunduh');
+function kasLapList(){
+  return S.kas.filter(k=>inR(dkey(k.ts),perRange())&&(!lp.kat||k.jenis===lp.kat)&&(!lp.jenis||k.kategori===lp.jenis)).sort((a,b)=>a.ts-b.ts);
 }
-
-function exportExcel(){
-  const rows = buildExportRows();
-  if(!rows.length) return toast('Belum ada data untuk diekspor');
-  const head = ['No','Tanggal','Hari','Jam','ID Transaksi','Pemesan','Menu','Nomor','Qty','Harga','Subtotal','Total'];
-  let html = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><style>table{border-collapse:collapse;font-family:Arial;font-size:12px}th,td{border:1px solid #ccc;padding:6px 8px}th{background:#c8f560;text-align:left}.num{text-align:right}</style></head><body>`;
-  html += `<h3>Laporan Penjualan - ${esc(S.cfg.nama)}</h3><p>Diekspor: ${fDT(Date.now())}</p>`;
-  html += `<table><thead><tr>`;
-  head.forEach(h=> html += `<th>${h}</th>`);
-  html += `</tr></thead><tbody>`;
-  rows.forEach(r=>{
-    html += `<tr>
-      <td>${r.no}</td>
-      <td>${esc(r.tanggal)}</td>
-      <td>${esc(r.hari)}</td>
-      <td>${esc(r.jam)}</td>
-      <td>${esc(r.id)}</td>
-      <td>${esc(r.pemesan)}</td>
-      <td>${esc(r.menu)}</td>
-      <td>${esc(r.nomor)}</td>
-      <td class="num">${r.qty}</td>
-      <td class="num">${r.harga}</td>
-      <td class="num">${r.subtotal}</td>
-      <td class="num">${r.total}</td>
-    </tr>`;
-  });
-  html += `</tbody></table></body></html>`;
-  downloadBlob(html, 'application/vnd.ms-excel', exportFilename('xls'));
-  toast('Excel diunduh');
+function kasLapSum(L){
+  const ap=L.filter(k=>k.status==='Approved'),by=j=>{const m={};ap.filter(k=>k.jenis===j).forEach(k=>m[k.kategori]=(m[k.kategori]||0)+(+k.jumlah||0));return m};
+  const masuk=by('Kas Masuk'),keluar=by('Kas Keluar'),sum=o=>Object.values(o).reduce((a,v)=>a+v,0);
+  return {masuk,keluar,tm:sum(masuk),tk:sum(keluar)};
 }
+function kasLapHTML(){
+  const L=kasLapList(),sm=kasSaldoMap(),s=kasLapSum(L);
+  const sel=(id,opts,v,fn)=>`<select class="k-sel" onchange="${fn}(this.value)"><option value="">${id}</option>${opts.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+  const lines=o=>Object.entries(o).map(([k,v])=>`<div class="k-row" style="padding-left:14px"><span>${esc(k)}</span><b>${rp(v)}</b></div>`).join('');
+  return `<div class="k-cats">${sel('Pilih Kategori (semua)',S.jenis,lp.kat,'lpKat')}${sel('Pilih Jenis (semua)',S.kkas,lp.jenis,'lpJenis')}</div>`+
+    (L.length?tableHTML(KAS_HEAD,L.map(k=>kasRowArr(k,sm))):`<div class="k-empty">Tidak ada catatan kas</div>`)+
+    `<div class="k-box"><div class="k-lbl" style="margin-top:0">Ikhtisar Laporan Usaha (Approved)</div>
+      <div class="k-row"><span>Jumlah Kas Masuk :</span><b>${rp(s.tm)}</b></div>${lines(s.masuk)}
+      <div class="k-row"><span>Pengeluaran total :</span><b>${rp(s.tk)}</b></div>${lines(s.keluar)}
+      <div class="k-row" style="border-top:1px solid var(--border);margin-top:6px"><span>Saldo periode :</span><b>${rp(s.tm-s.tk)}</b></div></div>`;
+}
+const lpKat=v=>lpSet('kat',v),lpJenis=v=>lpSet('jenis',v);
 
-function exportPDF(){
-  const rows = buildExportRows();
-  if(!rows.length) return toast('Belum ada data untuk diekspor');
-  const trxPaid = S.trx.filter(t=>t.paid);
-  const totalAll = trxPaid.reduce((a,t)=>a+t.total,0);
-
-  const w = window.open('', '_blank');
-  if(!w) return toast('Popup diblokir browser');
-
-  let body = `
-    <html><head><meta charset="utf-8"><title>Laporan Penjualan - ${esc(S.cfg.nama)}</title>
-    <style>
-      *{box-sizing:border-box}
-      body{font-family:Arial,sans-serif;padding:24px;color:#121411;margin:0}
-      h1{font-size:20px;margin:0 0 4px;letter-spacing:-.3px}
-      p.meta{color:#6b7266;font-size:12px;margin:0 0 18px}
-      .summary{background:#c8f560;padding:12px 16px;border-radius:8px;margin-bottom:18px;font-size:13px}
-      .summary b{font-size:15px}
-      table{width:100%;border-collapse:collapse;font-size:11px}
-      th{background:#252922;color:#fff;text-align:left;padding:8px 6px;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
-      td{padding:7px 6px;border-bottom:1px solid #eaebe7}
-      tr:nth-child(even) td{background:#f8faf3}
-      .num{text-align:right;white-space:nowrap}
-      .center{text-align:center}
-      .footer{margin-top:16px;font-size:10px;color:#6b7266;text-align:center}
-      @media print{body{padding:12px}}
-    </style></head><body>
-    <h1>Laporan Penjualan</h1>
-    <p class="meta">${esc(S.cfg.nama)} · ${esc(S.cfg.tag)} · Dicetak ${fDT(Date.now())}</p>
-    <div class="summary">Total Transaksi: <b>${trxPaid.length}</b> &nbsp;·&nbsp; Total Pendapatan: <b>${rp(totalAll)}</b></div>
-    <table>
-      <thead><tr>
-        <th style="width:26px;">#</th>
-        <th>Tanggal</th>
-        <th>Hari</th>
-        <th>Jam</th>
-        <th>ID</th>
-        <th>Pemesan</th>
-        <th>Menu</th>
-        <th style="width:36px;">No</th>
-        <th class="center" style="width:32px;">Qty</th>
-        <th class="num" style="width:70px;">Harga</th>
-        <th class="num" style="width:78px;">Subtotal</th>
-        <th class="num" style="width:78px;">Total</th>
-      </tr></thead>
-      <tbody>
-  `;
-  rows.forEach(r=>{
-    body += `<tr>
-      <td>${r.no}</td>
-      <td>${esc(r.tanggal)}</td>
-      <td>${esc(r.hari)}</td>
-      <td>${esc(r.jam)}</td>
-      <td>${esc(r.id)}</td>
-      <td>${esc(r.pemesan)}</td>
-      <td>${esc(r.menu)}</td>
-      <td>${esc(r.nomor)}</td>
-      <td class="center">${r.qty}</td>
-      <td class="num">${nf(r.harga)}</td>
-      <td class="num">${nf(r.subtotal)}</td>
-      <td class="num">${r.total ? nf(r.total) : ''}</td>
-    </tr>`;
-  });
-  body += `</tbody></table>
-    <div class="footer">Dicetak dari ${esc(S.cfg.nama)} — ${trxPaid.length} transaksi</div>
-    <script>window.onload=function(){setTimeout(function(){window.print();},400);};<\/script>
-    </body></html>`;
-  w.document.write(body);
+function rptData(kind){
+  const nm=S.cfg.nama;
+  if(kind==='kas0'){const sm=kasSaldoMap(),L=[...S.kas].sort((a,b)=>a.ts-b.ts);return {title:'Buku Kas',head:KAS_HEAD,rows:L.map(k=>kasRowArr(k,sm)),foot:'Saldo awal '+rp(S.saldoAwal)}}
+  if(lp.t==='dash'){const d=dashData();return {title:'Dashboard',head:['Keterangan','Nilai'],rows:[['Periode',perLabel()],['Total Penjualan',nf(d.total)],['Jumlah Transaksi',d.n],['Rata-Rata Penjualan per hari',nf(d.avgDay)],['Hari kerja aktif',d.days],['Est. Jumlah Pembeli',d.buyers],['Est. Rata-Rata belanja per pembeli',nf(d.avgBuyer)],...Object.entries(d.cats).map(([c,v])=>['Kategori '+c,v.pcs+' Pcs / '+nf(v.rp)])]}}
+  if(lp.t==='sales'){const f=salesFlat();return {title:'Laporan Penjualan',head:SALES_HEAD,rows:f.rows,foot:`Periode ${perLabel()} · Jumlah ${f.pcs} pcs · Total ${nf(f.sum)}`}}
+  if(lp.t==='top')return {title:'Laporan Produk Terlaris',head:TOP_HEAD,rows:topRows(),foot:'Periode '+perLabel()};
+  const L=kasLapList(),sm=kasSaldoMap(),s=kasLapSum(L);
+  return {title:'Laporan Buku Kas',head:KAS_HEAD,rows:L.map(k=>kasRowArr(k,sm)),foot:`Kas Masuk ${nf(s.tm)} · Pengeluaran ${nf(s.tk)} · Saldo periode ${nf(s.tm-s.tk)}`};
+}
+function exportRpt(fmt,kind){
+  const d=rptData(kind);
+  if(!d.rows.length) return toast('Tidak ada data untuk diekspor');
+  const name=d.title.replace(/\s+/g,'_')+'_'+dkey(Date.now());
+  if(fmt==='csv') return downloadBlob('\ufeff'+[d.head,...d.rows].map(r=>r.map(escCSV).join(',')).join('\r\n'),'text/csv;charset=utf-8',name+'.csv');
+  const w=window.open('','_blank'); if(!w) return toast('Popup diblokir browser');
+  w.document.open();
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(d.title)}</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#121411}h2{margin:0 0 4px}p{margin:0 0 14px;color:#666;font-size:12px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #bbb;padding:5px 6px;text-align:left}th{background:#eef0e8}@media print{@page{size:A4 landscape;margin:10mm}}</style></head><body><h2>${esc(d.title)}</h2><p>${esc(S.cfg.nama)} · ${esc(S.cfg.tag)} · Dicetak ${fDT(Date.now())}</p><table><thead><tr>${d.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>${d.foot?`<p style="margin-top:12px"><b>${esc(d.foot)}</b></p>`:''}<script>setTimeout(function(){print()},300)<\/script></body></html>`);
   w.document.close();
-  toast('Membuka dialog cetak PDF');
+}
+function escCSV(s){s=String(s??'');return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function downloadBlob(content,mime,filename){
+  const url=URL.createObjectURL(new Blob([content],{type:mime})),a=document.createElement('a');
+  a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),300);
 }
 
-/* ===== PENGATURAN ===== */
+/* ===== PENGATURAN (Halaman 5) ===== */
 function pAtur(){
-  $('view').innerHTML = `
-    <div class="section-header"><h2>Pengaturan</h2></div>
-    <div style="background:var(--surface);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:16px;">
-      <div class="form-group"><label class="form-label">Nama Usaha</label><input id="s-nama" class="form-input" value="${esc(S.cfg.nama)}"></div>
-      <div class="form-group"><label class="form-label">Tagline</label><input id="s-tag" class="form-input" value="${esc(S.cfg.tag)}"></div>
-      <div class="form-group"><label class="form-label">PIN Admin</label><input id="s-pin" type="password" class="form-input" value="${esc(S.cfg.pinA)}"></div>
-      <button class="btn-lime" onclick="saveAtur()">Simpan Pengaturan</button>
-    </div>
-    <div style="background:var(--surface);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm);border:1px solid var(--border);">
-      <button class="btn-solid" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;" onclick="if(confirm('Hapus semua data?')){S.trx=[];S.kas=[];save();render();toast('Data dihapus')}">Reset Data</button>
-    </div>
-  `;
+  const c=S.cfg,sel=(id,v,opts)=>`<select id="${id}" class="form-input">${opts.map(([a,b])=>`<option value="${a}" ${String(v)===a?'selected':''}>${b}</option>`).join('')}</select>`;
+  const fg=(l,h)=>`<div class="form-group"><label class="form-label">${l}</label>${h}</div>`;
+  const sec=(n,ttl,body,open)=>`<details class="s-sec" ${open?'open':''}><summary>${n}. ${ttl}</summary><div class="s-body">${body}</div></details>`;
+  $('view').innerHTML=`<div class="k-lbl" style="margin-top:0">Halaman Pengaturan</div>
+    ${sec(1,'Pengaturan PIN Kasir &amp; Admin',
+      fg('PIN Kasir',`<input id="s-pinK" class="form-input" inputmode="numeric" value="${esc(c.pinK)}">`)+fg('PIN Admin',`<input id="s-pinA" class="form-input" inputmode="numeric" value="${esc(c.pinA)}">`)+
+      fg('Kunci otomatis halaman admin',sel('s-autolock',c.autolock,[['tidak','Tidak'],['ya','Ya (kembali ke Kasir minta PIN lagi)']])),1)}
+    ${sec(2,'Printer, Tampilan Utama, Nama Usaha, Tagline',
+      fg('Nama Usaha',`<input id="s-nama" class="form-input" value="${esc(c.nama)}">`)+fg('Tagline',`<input id="s-tag" class="form-input" value="${esc(c.tag)}">`)+
+      fg('Ukuran kertas printer',sel('s-ukuran',c.ukuran,[['58','58 mm'],['80','80 mm']])))}
+    ${sec(3,'Back up, Restore &amp; Update',
+      `<button class="btn-lime" onclick="backupData()">Backup Data (unduh file)</button>
+       <div class="form-group" style="margin-top:12px"><label class="form-label">Restore dari file backup</label><input id="s-restore" type="file" accept=".json,application/json" class="form-input" onchange="restoreData(this)"></div>
+       <button class="btn-solid" onclick="location.reload()">Update / Muat ulang aplikasi</button>`)}
+    ${sec(4,'Pengaturan Struk Cetak',
+      fg('Teks penutup struk',`<input id="s-foot" class="form-input" value="${esc(c.foot)}">`)+fg('Tampilkan No. Transaksi',sel('s-showId',c.showId,[['ya','Ya'],['tidak','Tidak']]))+
+      fg('Cetak struk otomatis saat menyimpan pesanan',sel('s-autoPrint',c.autoPrint,[['ya','Ya'],['tidak','Tidak']])))}
+    ${sec(5,'Pengaturan Lain yang Penting',
+      fg('Tanggal mulai periode bulanan laporan (1–28)',`<input id="s-bd" class="form-input" inputmode="numeric" value="${esc(c.bd)}">`)+
+      `<button class="btn-solid" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5" onclick="if(confirm('Hapus semua transaksi & buku kas akun ini?')){S.trx=[];S.kas=[];save();render();toast('Data dihapus')}">Reset Transaksi &amp; Kas</button>`)}
+    <button class="k-go" style="margin-top:12px" onclick="saveAtur()">Simpan Pengaturan</button>`;
 }
-
 function saveAtur(){
-  S.cfg.nama = $('s-nama').value;
-  S.cfg.tag = $('s-tag').value;
-  S.cfg.pinA = $('s-pin').value;
-  save(); render(); toast('Tersimpan');
+  const v=id=>$(id).value.trim(),c=S.cfg;
+  if(v('s-pinK').length<4||v('s-pinA').length<4) return toast('PIN minimal 4 karakter');
+  Object.assign(c,{pinK:v('s-pinK'),pinA:v('s-pinA'),autolock:v('s-autolock'),nama:v('s-nama')||'Kasir Rempah',tag:v('s-tag'),ukuran:v('s-ukuran'),
+    foot:v('s-foot'),showId:v('s-showId'),autoPrint:v('s-autoPrint'),bd:Math.min(28,Math.max(1,parseInt(v('s-bd'))||1))});
+  save();render();toast('Tersimpan');
+}
+function backupData(){
+  downloadBlob(JSON.stringify({app:'kasir-rempah',v:1,user:USER&&USER.username,at:Date.now(),data:S}),'application/json','Backup_'+dkey(Date.now())+'_'+(USER?USER.username:'kasir')+'.json');
+  toast('Backup diunduh');
+}
+function restoreData(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const o=JSON.parse(r.result),d=o.data||o;
+    if(!d||!Array.isArray(d.menu)||!Array.isArray(d.trx)) throw 0;
+    if(!confirm('Restore akan MENGGANTI semua data akun ini. Lanjutkan?')){inp.value='';return}
+    S=d;normalizeS();save();render();toast('Data dipulihkan');
+  }catch(e){toast('File backup tidak valid');inp.value=''}};
+  r.readAsText(f);
 }
 
 // Init
