@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" id="vp" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0c0e0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});</script>
 <script>/* Skala tampilan di HP: UI dirender selebar UI_W px lalu diperkecil (CSS zoom, jalan juga di preview/iframe) */
 (function(){
   var UI_W=520,de=document.documentElement;
@@ -1296,10 +1303,11 @@ function customModal(id){
   const v=(m.variasi||'').split(',').map(s=>s.trim()).filter(Boolean);
   modal(`<h2 class="modal-title">${esc(m.nama)}</h2>
     <div class="k-lbl" style="margin-top:0">Custom / Catatan</div>
-    <div class="k-chips">${v.map(x=>`<button class="k-btn" onclick="$('c-note').value=this.textContent">${esc(x)}</button>`).join('')}</div>
+    <div class="k-chips">${v.map(x=>`<button class="k-btn" onclick="addNote(this.textContent)">${esc(x)}</button>`).join('')}</div>
     <div class="form-group"><input id="c-note" class="form-input" placeholder="Contoh: Sedikit Gula" autocomplete="off"></div>
     <button class="btn-lime" onclick="customAdd('${m.id}')">Tambah ke Pesanan</button>`);
 }
+function addNote(v){const i=$('c-note');i.value=i.value?i.value+', '+v:v}
 function customAdd(id){addItem(id,$('c-note').value.trim());closeM()}
 
 function confirmPay(){
@@ -1333,7 +1341,7 @@ function kHist(){
   if(!L.length) return `<div class="k-empty">Belum ada transaksi</div>`;
   return `<table class="k-tbl"><thead><tr><th>TGL &amp; Jam</th><th>ID trx</th><th>pcs</th><th>Pesanan</th><th>Meja/Catatan</th><th>Harga</th><th>Total</th><th>Status Pembayaran</th></tr></thead>`+
   L.map(t=>{const n=t.items.length,rs=`rowspan="${n}"`;
-    return t.items.map((l,i)=>`<tr class="${i?'':'g'}">${i?'':`<td ${rs}>${fmtTgl(t.ts)}</td><td ${rs}>${esc(t.id)}</td>`}<td>${l.qty}</td><td>${esc(l.nama)}${l.note?` <small>(${esc(l.note)})</small>`:''}</td>${i?'':`<td ${rs}>${esc(t.nama)}</td>`}<td>${nf(l.harga)}</td>${i?'':`<td ${rs}>${nf(t.total)}</td><td ${rs}>${t.paid?`<span class="k-st ok">Sudah bayar</span>`:`<span class="k-st no">Blm bayar</span><button class="k-upd red" onclick="updModal('${t.id}')">Update Bayar</button>`}</td>`}</tr>`).join('');
+    return t.items.map((l,i)=>`<tr class="${i?'':'g'}">${i?'':`<td ${rs}>${fmtTgl(t.ts)}</td><td ${rs}>${esc(t.id)}</td>`}<td>${l.qty}</td><td>${esc(l.nama)}${l.note?` <small>(${esc(l.note)})</small>`:''}</td>${i?'':`<td ${rs}>${esc(t.nama)}</td>`}<td>${nf(l.harga)}</td>${i?'':`<td ${rs}>${nf(t.total)}</td><td ${rs}>${t.paid?`<span class="k-st ok">Sudah bayar</span>`+`<button class="k-upd" style="background:#deebf7" onclick="reprint('${t.id}')">Cetak</button>`:`<span class="k-st no">Blm bayar</span><button class="k-upd red" onclick="updModal('${t.id}')">Update Bayar</button>`}</td>`}</tr>`).join('');
   }).join('')+`</table>`;
 }
 function updModal(id,keep){
@@ -1376,6 +1384,7 @@ function strukPrintHTML(t){
       <div class="item-info">
         <span class="item-name">${esc(l.nama)}</span>
         <span class="item-meta">${l.qty} × ${rp(l.harga)}${l.nomor ? ` · #${esc(l.nomor)}` : ''}</span>
+        ${l.note?`<span class="item-note">• ${esc(l.note)}</span>`:''}
       </div>
       <span class="item-total">${rp(l.qty*l.harga)}</span>
     </div>
@@ -1424,6 +1433,7 @@ function strukPrintHTML(t){
   .badge.paid::before{background:#121411}
   .badge.unpaid{background:#fee2e2;color:#991b1b;border:1.5px solid #fca5a5}
   .badge.unpaid::before{background:#991b1b}
+  .item-note{display:block;font-size:11px;font-weight:800;color:#444;margin-top:2px}
   .r-footer{padding:14px 22px 22px;text-align:center;border-top:1px dashed #eef0e9}
   .thanks{font-size:12px;font-weight:800;color:#121411;margin-bottom:3px}
   .note{font-size:9.5px;color:#6b7266;font-weight:600;line-height:1.4}
@@ -1464,7 +1474,7 @@ function strukPrintHTML(t){
 </body></html>`;
 }
 
-function printStruk(t){
+function printStrukHTML(t){
   const w = window.open('', '_blank');
   if(!w){ toast('Popup diblokir browser'); return; }
   try {
@@ -1473,6 +1483,180 @@ function printStruk(t){
     w.document.close();
     setTimeout(()=>{ try{ w.focus(); }catch(e){} }, 150);
   } catch(e){ toast('Gagal membuka struk'); }
+}
+
+
+/* ===== CETAK STRUK: dialog browser / RawBT / printer Bluetooth (Capacitor) ===== */
+const cols=()=>S.cfg.ukuran==='80'?48:32;
+const asc=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7e]/g,'?');
+const padLR=(a,b,n)=>{a=asc(a);b=asc(b);return a+' '.repeat(Math.max(1,n-a.length-b.length))+b};
+function wrapT(s,n){s=asc(s);const o=[];while(s.length>n){let k=s.lastIndexOf(' ',n);if(k<n/2)k=n;o.push(s.slice(0,k));s=s.slice(k).trimStart()}o.push(s);return o}
+function strukLines(t){
+  const n=cols(),c=S.cfg,d=new Date(t.pts||t.ts),L=[];
+  const add=(v,o)=>L.push({v:asc(v),...(o||{})}),line=()=>add('-'.repeat(n));
+  add(c.nama,{align:'center',bold:1,big:asc(c.nama).length<=n/2});
+  if(c.tag)wrapT(c.tag,n).forEach(x=>add(x,{align:'center'}));
+  line();
+  if(c.showId!=='tidak')add(padLR('No',t.id,n));
+  add(padLR('Tgl',fD(dkey(t.ts))+' '+p2(d.getHours())+':'+p2(d.getMinutes()),n));
+  add(padLR('Pemesan',String(t.nama),n));
+  line();
+  t.items.forEach(l=>{
+    wrapT(l.nama,n).forEach(x=>add(x,{bold:1}));
+    add(padLR('  '+l.qty+' x '+nf(l.harga),nf(l.qty*l.harga),n));
+    if(l.note)wrapT('* '+l.note,n-2).forEach(x=>add('  '+x));   /* catatan / custom per menu */
+  });
+  line();
+  add(padLR('TOTAL',rp(t.total),n),{bold:1});
+  if(t.paid){
+    const bayar=t.diterima||t.total;
+    add(padLR('Bayar ('+(t.metode||'Tunai')+')',rp(bayar),n));
+    if(bayar>t.total)add(padLR('Kembali',rp(bayar-t.total),n));
+    add('LUNAS',{align:'center',bold:1});
+  }else add('BELUM BAYAR',{align:'center',bold:1});
+  line();
+  if(c.foot)wrapT(c.foot,n).forEach(x=>add(x,{align:'center'}));
+  return L;
+}
+function escposBytes(t){
+  const b=[],w=(...x)=>b.push(...x);
+  w(0x1b,0x40);
+  strukLines(t).forEach(l=>{
+    w(0x1b,0x61,l.align==='center'?1:0,0x1b,0x45,l.bold?1:0,0x1d,0x21,l.big?0x11:0);
+    for(const ch of l.v)b.push(ch.charCodeAt(0)&255);
+    w(10);
+  });
+  w(0x1b,0x45,0,0x1d,0x21,0,0x1b,0x61,0,10,10,10,10);
+  return new Uint8Array(b);
+}
+async function printCap(t){
+  const p=cap('ThermalPrinter');
+  await p.requestPermissions();
+  const items=strukLines(t).map(l=>({type:'text',value:l.v,style:{align:l.align||'left',bold:!!l.bold,...(l.big?{widthMultiplier:2,heightMultiplier:2}:{})}}));
+  const o={items,paperWidthMm:+S.cfg.ukuran||58,feedLines:4,cut:false};
+  if(S.cfg.printerId)o.printerId=S.cfg.printerId;   /* kosong = printer default */
+  await p.printText(o);
+}
+
+/* ===== CETAK LANGSUNG DARI CHROME (tanpa aplikasi): USB (WebUSB) & Bluetooth BLE (Web Bluetooth) ===== */
+const BLE_SVC=['000018f0-0000-1000-8000-00805f9b34fb','0000ff00-0000-1000-8000-00805f9b34fb','0000ffe0-0000-1000-8000-00805f9b34fb','0000fee7-0000-1000-8000-00805f9b34fb','0000ae30-0000-1000-8000-00805f9b34fb','e7810a71-73ae-499d-8c15-faa9aef0c3f2','49535343-fe7d-4ae5-8fa9-9fafd205e455'];
+let _ble=null,_usb=null;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function bleFindChar(dev){
+  const g=dev.gatt.connected?dev.gatt:await dev.gatt.connect();
+  for(const s of await g.getPrimaryServices())for(const c of await s.getCharacteristics())
+    if(c.properties.write||c.properties.writeWithoutResponse)return c;
+  throw new Error('Printer ini tidak punya jalur tulis BLE (kemungkinan hanya Bluetooth klasik/SPP)');
+}
+async function bleConnect(){
+  if(!navigator.bluetooth)throw new Error('Browser ini tidak mendukung Web Bluetooth (pakai Chrome via https)');
+  const d=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:BLE_SVC});
+  _ble={d,c:await bleFindChar(d)};return d.name||'Printer BLE';
+}
+async function bleWrite(u){
+  if(!_ble)throw new Error('Hubungkan printer BLE dulu di Pengaturan');
+  if(!_ble.d.gatt.connected)_ble.c=await bleFindChar(_ble.d);
+  const c=_ble.c,n=c.properties.writeWithoutResponse?100:20;
+  for(let i=0;i<u.length;i+=n){const ch=u.slice(i,i+n);c.properties.writeWithoutResponse?await c.writeValueWithoutResponse(ch):await c.writeValue(ch);await sleep(15)}
+}
+async function usbOpen(d){
+  await d.open();if(!d.configuration)await d.selectConfiguration(1);
+  for(const i of d.configuration.interfaces){
+    const ep=i.alternates[0].endpoints.find(e=>e.direction==='out'&&e.type==='bulk');
+    if(ep){await d.claimInterface(i.interfaceNumber);_usb={d,ep:ep.endpointNumber};return d.productName||'Printer USB'}
+  }
+  throw new Error('Tidak ada jalur cetak (bulk OUT) pada perangkat USB ini');
+}
+async function usbConnect(){
+  if(!navigator.usb)throw new Error('Browser ini tidak mendukung WebUSB (pakai Chrome via https)');
+  return usbOpen(await navigator.usb.requestDevice({filters:[]}));
+}
+async function usbWrite(u){
+  if(!_usb||!_usb.d.opened){
+    const l=navigator.usb?await navigator.usb.getDevices():[];   /* izin USB tersimpan, tidak perlu pilih ulang */
+    if(!l.length)throw new Error('Hubungkan printer USB dulu di Pengaturan');
+    await usbOpen(l[0]);
+  }
+  for(let i=0;i<u.length;i+=4096)await _usb.d.transferOut(_usb.ep,u.slice(i,i+4096));
+}
+async function pickAny(){
+  const m=$('s-printer')?$('s-printer').value:(S.cfg.printer||'auto');
+  if(m==='serial')return pickSerial();
+  if(m==='usb'||m==='ble'){
+    try{const n=await(m==='usb'?usbConnect():bleConnect());S.cfg.printer=m;S.cfg.printerName=n;save();pAtur();toast('Terhubung: '+n)}
+    catch(e){if(e&&e.name==='NotFoundError')return;toast('Gagal: '+((e&&e.message)||''))}
+  }else pickPrinter();
+}
+
+
+/* ===== Web Serial: printer Bluetooth SPP langsung dari Chrome (Android 138+, HTTPS) ===== */
+let _sp=null;
+const serialOK=()=>'serial' in navigator;
+async function serialPort(ask){
+  if(!serialOK())throw new Error('Chrome belum mendukung Web Serial (butuh Chrome 138+ di Android, dan alamat https)');
+  if(_sp)return _sp;
+  const ps=await navigator.serial.getPorts();
+  if(ps.length)_sp=ps[0];
+  else if(ask)_sp=await navigator.serial.requestPort();
+  else throw new Error('Printer belum dipilih. Buka Pengaturan lalu pilih printer Bluetooth.');
+  return _sp;
+}
+async function printSerial(t){
+  const port=await serialPort(true);
+  try{await port.open({baudRate:9600})}catch(e){if(!/already open|InvalidStateError/i.test((e.name||'')+(e.message||'')))throw e}
+  const w=port.writable.getWriter(),data=escposBytes(t);
+  try{
+    for(let i=0;i<data.length;i+=256){await w.write(data.subarray(i,i+256));await new Promise(r=>setTimeout(r,25))}
+  }finally{w.releaseLock();try{await port.close()}catch(e){}}
+}
+async function pickSerial(){
+  try{
+    if(!serialOK())throw new Error('Chrome belum mendukung Web Serial (butuh Chrome 138+ di Android, dan alamat https)');
+    _sp=await navigator.serial.requestPort();
+    S.cfg.printer='serial';S.cfg.serialOK=true;S.cfg.printerName='Bluetooth SPP (Chrome)';save();pAtur();toast('Printer dipilih. Coba Tes Cetak.');
+  }catch(e){if(e&&e.name!=='NotFoundError')toast('Gagal: '+(e.message||e.name))}
+}
+async function forgetSerial(){
+  try{for(const x of await navigator.serial.getPorts())if(x.forget)await x.forget()}catch(e){}
+  _sp=null;S.cfg.serialOK=false;if(S.cfg.printerName==='Bluetooth SPP (Chrome)')S.cfg.printerName='';save();pAtur();toast('Printer dilupakan');
+}
+async function printStruk(t){
+  const m=S.cfg.printer||'auto',mode=m==='auto'?(isCap()?'thermal':(S.cfg.serialOK&&serialOK()?'serial':'browser')):m;
+  try{
+    if(mode==='serial'){await printSerial(t);toast('Struk dicetak');
+    }else if(mode==='thermal'){
+      if(!isCap())return toast('Printer Bluetooth langsung hanya di aplikasi Android (Capacitor)');
+      await printCap(t);toast('Struk dicetak');
+    }else if(mode==='usb'){await usbWrite(escposBytes(t));toast('Struk dicetak');
+    }else if(mode==='ble'){await bleWrite(escposBytes(t));toast('Struk dicetak');
+    }else if(mode==='rawbt'){
+      location.href='intent:base64,'+toB64(escposBytes(t))+'#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;';
+    }else printStrukHTML(t);
+  }catch(e){toast('Gagal cetak: '+((e&&(e.message||e.code))||'cek printer'))}
+}
+const reprint=id=>{const t=S.trx.find(x=>x.id==id);if(t)printStruk(t)};
+let _found=[];
+async function pickPrinter(){
+  if(!isCap())return toast('Hanya di aplikasi Android (Capacitor). Di browser pakai RawBT.');
+  try{
+    const p=cap('ThermalPrinter');toast('Mencari printer...');
+    await p.requestPermissions();
+    _found=(await p.discoverPrinters({timeoutMs:8000})).printers||[];
+    modal(`<h2 class="modal-title">Pilih Printer</h2>${_found.length?_found.map((x,i)=>`<button class="btn-solid" style="margin-bottom:8px" onclick="usePrinter(${i})">${esc(x.name||x.address)} <small>(${esc(x.transport)})</small></button>`).join(''):'<div class="k-empty">Printer tidak ditemukan. Pastikan sudah dinyalakan dan dipasangkan (pair) di pengaturan Bluetooth.</div>'}`);
+  }catch(e){toast('Gagal mencari: '+((e&&e.message)||''))}
+}
+async function usePrinter(i){
+  const x=_found[i];if(!x)return;
+  try{
+    const r=await cap('ThermalPrinter').connectPrinter({printerId:x.id,setAsDefault:true});
+    if(!r.connected)return toast('Gagal terhubung ke printer');
+    S.cfg.printerId=x.id;S.cfg.printerName=x.name||x.address;save();closeM();pAtur();toast('Printer terhubung');
+  }catch(e){toast('Gagal: '+((e&&e.message)||''))}
+}
+function testPrint(){
+  const now=Date.now();
+  printStruk({id:'TEST',ts:now,pts:now,nama:'Tes Printer',paid:true,metode:'Tunai',diterima:50000,total:34000,
+    items:[{nama:'Kunyit Latte',harga:12000,qty:2,note:'Less Sugar, Extra Jahe'},{nama:'Bandrek Susu Madu',harga:10000,qty:1,note:''}]});
 }
 
 /* ===== MENU (KELOLA) ===== */
@@ -1712,16 +1896,63 @@ function exportRpt(fmt,kind){
   if(!d.rows.length) return toast('Tidak ada data untuk diekspor');
   const name=d.title.replace(/\s+/g,'_')+'_'+dkey(Date.now());
   if(fmt==='csv') return downloadBlob('\ufeff'+[d.head,...d.rows].map(r=>r.map(escCSV).join(',')).join('\r\n'),'text/csv;charset=utf-8',name+'.csv');
-  const w=window.open('','_blank'); if(!w) return toast('Popup diblokir browser');
-  w.document.open();
-  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(d.title)}</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#121411}h2{margin:0 0 4px}p{margin:0 0 14px;color:#666;font-size:12px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #bbb;padding:5px 6px;text-align:left}th{background:#eef0e8}@media print{@page{size:A4 landscape;margin:10mm}}</style></head><body><h2>${esc(d.title)}</h2><p>${esc(S.cfg.nama)} · ${esc(S.cfg.tag)} · Dicetak ${fDT(Date.now())}</p><table><thead><tr>${d.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>${d.foot?`<p style="margin-top:12px"><b>${esc(d.foot)}</b></p>`:''}<script>setTimeout(function(){print()},300)<\/script></body></html>`);
-  w.document.close();
+  downloadBlob(makePDF(d.title,S.cfg.nama+' · '+S.cfg.tag+' · Dicetak '+fDT(Date.now()),d.head,d.rows,d.foot),'application/pdf',name+'.pdf');
 }
 function escCSV(s){s=String(s??'');return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
-function downloadBlob(content,mime,filename){
+const isCap=()=>!!(window.Capacitor&&typeof Capacitor.isNativePlatform==='function'&&Capacitor.isNativePlatform());
+const _pl={},cap=n=>_pl[n]||(_pl[n]=Capacitor.registerPlugin(n));
+const toBytes=c=>typeof c==='string'?new TextEncoder().encode(c):c;
+const toB64=u=>{let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
+async function downloadBlob(content,mime,filename){
+  if(isCap()){ /* di aplikasi Capacitor: simpan ke cache lalu buka menu Bagikan/Simpan */
+    try{
+      const f=await cap('Filesystem').writeFile({path:filename,data:toB64(toBytes(content)),directory:'CACHE'});
+      await cap('Share').share({title:filename,url:f.uri,dialogTitle:'Simpan / bagikan file'});
+      return;
+    }catch(e){ if(e&&/cancel/i.test(e.message||''))return; }
+  }
   const url=URL.createObjectURL(new Blob([content],{type:mime})),a=document.createElement('a');
   a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),300);
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  toast('File diunduh: '+filename);
+}
+
+/* PDF sederhana (tanpa library) — tabel A4 landscape, font Courier */
+function makePDF(title,sub,head,rows,foot){
+  const W=842,H=595,M=30,FS=7.5,CW=FS*0.6,LH=FS+3.5,MAXC=Math.floor((W-2*M)/CW);
+  const lat=s=>String(s??'').replace(/[^\x20-\x7e\xa0-\xff]/g,'?');
+  const pe=s=>lat(s).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
+  const all=[head,...rows].map(r=>r.map(lat));
+  const w=head.map((h,i)=>Math.min(28,Math.max(2,...all.map(r=>r[i].length))));
+  while(w.reduce((a,b)=>a+b+1,0)>MAXC){const i=w.indexOf(Math.max(...w));if(w[i]<=4)break;w[i]--}
+  const wrap=(s,n)=>{const o=[];s=String(s);while(s.length>n){let k=s.lastIndexOf(' ',n);if(k<n/2)k=n;o.push(s.slice(0,k));s=s.slice(k).trimStart()}o.push(s);return o};
+  const pages=[];let cur,y;
+  const np=()=>{cur=[];pages.push(cur);y=H-M};
+  const tx=(x,yy,s,f,b)=>cur.push(`BT /${b?'F2':'F1'} ${f} Tf ${x.toFixed(1)} ${yy.toFixed(1)} Td (${pe(s)}) Tj ET`);
+  const drow=(r,bold,ish)=>{
+    const cells=r.map((c,i)=>wrap(lat(c),w[i])),n=Math.max(...cells.map(c=>c.length)),h=n*LH+4;
+    if(y-h<M){np();if(!ish)drow(head,1,1)}
+    let x=M;
+    cells.forEach((ls,i)=>{const cw=(w[i]+1)*CW;cur.push(`${x.toFixed(1)} ${(y-h).toFixed(1)} ${cw.toFixed(1)} ${h} re S`);ls.forEach((l,j)=>tx(x+CW/2,y-LH*(j+1)+1.5,l,FS,bold));x+=cw});
+    y-=h;
+  };
+  np();tx(M,y-10,title,13,1);y-=24;tx(M,y,sub,8);y-=14;
+  drow(head,1,1);rows.forEach(r=>drow(r,0,0));
+  if(foot){if(y-20<M)np();tx(M,y-14,foot,9,1)}
+  const o=[];const add=s=>o.push(s);
+  add('<< /Type /Catalog /Pages 2 0 R >>');add('');
+  add('<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>');
+  add('<< /Type /Font /Subtype /Type1 /BaseFont /Courier-Bold /Encoding /WinAnsiEncoding >>');
+  const kids=[];
+  pages.forEach(p=>{const c='0.5 w\n'+p.join('\n');add(`<< /Length ${c.length} >>\nstream\n${c}\nendstream`);const ci=o.length;
+    add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${ci} 0 R >>`);kids.push(o.length+' 0 R')});
+  o[1]=`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${kids.length} >>`;
+  let out='%PDF-1.4\n';const off=[];
+  o.forEach((s,i)=>{off.push(out.length);out+=`${i+1} 0 obj\n${s}\nendobj\n`});
+  const xr=out.length;
+  out+=`xref\n0 ${o.length+1}\n0000000000 65535 f \n`+off.map(v=>String(v).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<< /Size ${o.length+1} /Root 1 0 R >>\nstartxref\n${xr}\n%%EOF`;
+  const u=new Uint8Array(out.length);for(let i=0;i<out.length;i++)u[i]=out.charCodeAt(i)&255;
+  return u;
 }
 
 /* ===== PENGATURAN (Halaman 5) ===== */
@@ -1735,7 +1966,7 @@ function pAtur(){
       fg('Kunci otomatis halaman admin',sel('s-autolock',c.autolock,[['tidak','Tidak'],['ya','Ya (kembali ke Kasir minta PIN lagi)']])),1)}
     ${sec(2,'Printer, Tampilan Utama, Nama Usaha, Tagline',
       fg('Nama Usaha',`<input id="s-nama" class="form-input" value="${esc(c.nama)}">`)+fg('Tagline',`<input id="s-tag" class="form-input" value="${esc(c.tag)}">`)+
-      fg('Ukuran kertas printer',sel('s-ukuran',c.ukuran,[['58','58 mm'],['80','80 mm']])))}
+      fg('Ukuran kertas printer',sel('s-ukuran',c.ukuran,[['58','58 mm'],['80','80 mm']]))+fg('Metode cetak struk',sel('s-printer',c.printer||'auto',[['auto','Otomatis'],['browser','Dialog cetak browser'],['serial','Bluetooth SPP langsung (Chrome 138+, tanpa aplikasi)'],['rawbt','RawBT (Android, Bluetooth)'],['usb','USB kabel OTG (tanpa aplikasi)'],['ble','Bluetooth BLE (tanpa aplikasi, jika printer mendukung)'],['thermal','Printer Bluetooth langsung (aplikasi Capacitor)']]))+`<div class="k-note" style="margin-top:0">Printer Bluetooth: <b>${c.printerName?esc(c.printerName):'belum dipilih'}</b></div><div class="k-cats"><button class="k-btn alt" onclick="pickAny()">Cari &amp; Hubungkan Printer</button><button class="k-btn alt" onclick="testPrint()">Tes Cetak</button><button class="k-btn" onclick="forgetSerial()">Lupakan</button></div>`)}
     ${sec(3,'Back up, Restore &amp; Update',
       `<button class="btn-lime" onclick="backupData()">Backup Data (unduh file)</button>
        <div class="form-group" style="margin-top:12px"><label class="form-label">Restore dari file backup</label><input id="s-restore" type="file" accept=".json,application/json" class="form-input" onchange="restoreData(this)"></div>
@@ -1751,7 +1982,7 @@ function pAtur(){
 function saveAtur(){
   const v=id=>$(id).value.trim(),c=S.cfg;
   if(v('s-pinK').length<4||v('s-pinA').length<4) return toast('PIN minimal 4 karakter');
-  Object.assign(c,{pinK:v('s-pinK'),pinA:v('s-pinA'),autolock:v('s-autolock'),nama:v('s-nama')||'Kasir Rempah',tag:v('s-tag'),ukuran:v('s-ukuran'),
+  Object.assign(c,{pinK:v('s-pinK'),pinA:v('s-pinA'),autolock:v('s-autolock'),nama:v('s-nama')||'Kasir Rempah',tag:v('s-tag'),ukuran:v('s-ukuran'),printer:v('s-printer'),
     foot:v('s-foot'),showId:v('s-showId'),autoPrint:v('s-autoPrint'),bd:Math.min(28,Math.max(1,parseInt(v('s-bd'))||1))});
   save();render();toast('Tersimpan');
 }
